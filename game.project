@@ -54,3 +54,8 @@ max_debug_vertices = 50000
 [html5]
 scale_mode = stretch
 
+[render]
+clear_color_red = 0.37
+clear_color_green = 0.51
+clear_color_blue = 0.59
+

@@ -8,6 +8,14 @@ collection_instances {
     z: 1.0
   }
 }
+collection_instances {
+  id: "hook"
+  collection: "/game/hook.collection"
+  position {
+    x: 971.0
+    y: 774.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "level"

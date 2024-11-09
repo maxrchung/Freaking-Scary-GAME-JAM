@@ -1,0 +1,49 @@
+name: "hook"
+scale_along_z: 0
+embedded_instances {
+  id: "hook"
+  data: "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"default\\\"\\n"
+  "mask: \\\"default\\\"\\n"
+  "embedded_collision_shape {\\n"
+  "  shapes {\\n"
+  "    shape_type: TYPE_SPHERE\\n"
+  "    position {\\n"
+  "      y: -124.0\\n"
+  "    }\\n"
+  "    rotation {\\n"
+  "    }\\n"
+  "    index: 0\\n"
+  "    count: 1\\n"
+  "  }\\n"
+  "  data: 119.43728\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"hook\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/objects.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 2.0
+    y: -53.0
+  }
+  scale3 {
+    x: 0.25
+    y: 0.25
+  }
+}

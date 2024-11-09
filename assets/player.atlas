@@ -1,100 +1,119 @@
 images {
-  image: "/assets/images/player/alienPink_front.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-}
-images {
-  image: "/assets/images/player/alienPink_hit.png"
-  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  image: "/assets/images/player/joeljam/frame00.png"
 }
 animations {
-  id: "walk"
+  id: "spin"
   images {
-    image: "/assets/images/player/alienPink_walk1.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+    image: "/assets/images/player/joeljam/frame00.png"
   }
   images {
-    image: "/assets/images/player/alienPink_walk2.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+    image: "/assets/images/player/joeljam/frame01.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame02.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame03.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame04.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame05.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame06.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame07.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame08.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame09.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame10.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame11.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame12.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame13.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame14.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame15.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame16.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame17.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame18.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame19.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame20.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame21.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame22.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame23.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame24.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame25.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame26.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame27.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame28.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame29.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame30.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame31.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame32.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame33.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame34.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame35.png"
+  }
+  images {
+    image: "/assets/images/player/joeljam/frame36.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 10
-  flip_horizontal: 0
-  flip_vertical: 0
 }
-animations {
-  id: "jump"
-  images {
-    image: "/assets/images/player/alienPink_jump.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  playback: PLAYBACK_NONE
-  fps: 60
-  flip_horizontal: 0
-  flip_vertical: 0
-}
-animations {
-  id: "climb"
-  images {
-    image: "/assets/images/player/alienPink_climb1.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  images {
-    image: "/assets/images/player/alienPink_climb2.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  playback: PLAYBACK_LOOP_FORWARD
-  fps: 10
-  flip_horizontal: 0
-  flip_vertical: 0
-}
-animations {
-  id: "swim"
-  images {
-    image: "/assets/images/player/alienPink_swim1.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  images {
-    image: "/assets/images/player/alienPink_swim2.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  playback: PLAYBACK_LOOP_FORWARD
-  fps: 10
-  flip_horizontal: 0
-  flip_vertical: 0
-}
-animations {
-  id: "duck"
-  images {
-    image: "/assets/images/player/alienPink_duck.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  playback: PLAYBACK_LOOP_FORWARD
-  fps: 60
-  flip_horizontal: 0
-  flip_vertical: 0
-}
-animations {
-  id: "idle"
-  images {
-    image: "/assets/images/player/alienPink_stand.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  playback: PLAYBACK_NONE
-  fps: 60
-  flip_horizontal: 0
-  flip_vertical: 0
-}
-animations {
-  id: "fall"
-  images {
-    image: "/assets/images/player/alienPink_swim2.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  playback: PLAYBACK_ONCE_FORWARD
-  fps: 60
-  flip_horizontal: 0
-  flip_vertical: 0
-}
-margin: 0
 extrude_borders: 2
-inner_padding: 0
