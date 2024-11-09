@@ -2,7 +2,11 @@ name: "hook"
 scale_along_z: 0
 embedded_instances {
   id: "hook"
-  data: "embedded_components {\n"
+  data: "components {\n"
+  "  id: \"hook\"\n"
+  "  component: \"/game/hook.script\"\n"
+  "}\n"
+  "embedded_components {\n"
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
   "  data: \"type: COLLISION_OBJECT_TYPE_STATIC\\n"

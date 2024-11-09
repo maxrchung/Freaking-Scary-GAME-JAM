@@ -1,0 +1,52 @@
+go.property("swing_speed", 2)        -- Speed of the swing
+go.property("swing_angle", 45)       -- Maximum swing angle
+go.property("chain_length", 50)     -- Length of the chain
+go.property("anchor_point", nil)  -- Point where the hook is anchored
+
+local function lerp(a, b, t)
+	return a + (b - a) * t
+end
+
+function init(self)
+	-- Initialize the hook's properties
+	self.time = 0
+	self.initial_position = go.get_position()
+	self.hook_size = go.get("#sprite", "size").y * go.get_scale().y / 2
+	self.anchor_point = self.anchor_point or vmath.vector3(self.initial_position.x, self.initial_position.y + self.chain_length + self.hook_size, 0)
+
+	-- Store the original rotation
+	self.original_rotation = go.get_rotation()
+end
+
+function update(self, dt)
+	-- Update the time
+	self.time = self.time + dt * self.swing_speed
+
+	-- Calculate the current angle based on a sine wave
+	local current_angle = math.rad(self.swing_angle) * math.sin(self.time)
+
+	-- Calculate the new position based on the angle and chain length
+	local offset_x = math.sin(current_angle) * self.chain_length
+	local offset_y = -math.cos(current_angle) * self.chain_length
+
+	local pivot_adjust_x = math.sin(current_angle) * self.hook_size
+	local pivot_adjust_y = -math.cos(current_angle) * self.hook_size
+
+	-- Set the new position relative to the anchor point
+	local new_position = vmath.vector3(
+	self.anchor_point.x + offset_x + pivot_adjust_x,
+	self.anchor_point.y + offset_y + pivot_adjust_y,
+	self.initial_position.z
+)
+
+-- Update the position
+go.set_position(new_position)
+
+-- Update the rotation to match the swing angle
+local new_rotation = vmath.quat_rotation_z(current_angle)
+go.set_rotation(new_rotation)
+end
+
+function on_message(self, message_id, message, sender)
+-- Handle any messages here if needed
+end
