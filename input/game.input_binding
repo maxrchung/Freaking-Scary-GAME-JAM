@@ -10,6 +10,26 @@ key_trigger {
   input: KEY_SPACE
   action: "jump"
 }
+key_trigger {
+  input: KEY_1
+  action: "network_debug_1"
+}
+key_trigger {
+  input: KEY_2
+  action: "network_debug_2"
+}
+key_trigger {
+  input: KEY_3
+  action: "network_debug_3"
+}
+key_trigger {
+  input: KEY_4
+  action: "network_debug_4"
+}
+key_trigger {
+  input: KEY_5
+  action: "network_debug_5"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"

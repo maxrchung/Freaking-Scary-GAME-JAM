@@ -23,7 +23,6 @@ local anim_idle = hash("idle")
 local anim_jump = hash("jump")
 local anim_fall = hash("fall")
 
-
 function init(self)
 	-- this lets us handle input in this script
 	msg.post(".", "acquire_input_focus")
