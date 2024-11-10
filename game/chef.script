@@ -27,5 +27,11 @@ function on_message(self, message_id, message, sender)
     if message_id == hash("make_angry") and sender ~= self.anger then
         self.anger = sender
         self.t = 0 -- Reset t when a new anger target is set
+    elseif message_id == hash("trigger_response") and message.other_group == hash("player") then
+        if message.enter then
+            sprite.play_flipbook("#sprite", "chef_chop")
+        else
+            sprite.play_flipbook("#sprite", "chef_angy")
+        end
     end
 end
