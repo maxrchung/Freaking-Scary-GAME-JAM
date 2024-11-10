@@ -1,6 +1,5 @@
 local HOST = 'localhost'
 local PORT = 1666
-local TIMER_DELAY = 0.05 -- Dunno but kind of seems stable?
 
 function init(self)
 	self.is_server = false
@@ -38,15 +37,30 @@ function final(self)
 end
 
 function update(self, dt)
+	local msgs = {}
+
 	if self.is_server then
+
 		-- receivefrom tells us host/port info
 		local data, host, port = self.server:receivefrom()
-		if data then
-			local decoded = json.decode(data)
+		
+		while data do
+			msgs[#msgs + 1] = { data = data, host = host, port = port }
+			data, host, port = self.server:receivefrom()
+		end
+
+		pprint(#msgs)
+
+		for _, msg_obj in ipairs(msgs) do
+			local msg_data = msg_obj.data
+			local msg_host = msg_obj.host
+			local msg_port = msg_obj.port
+			
+			local decoded = json.decode(msg_data)
 			local command = decoded.command
 
 			print('Server received: ', command)
-			
+
 			if command == 'connect' then
 				-- creates a player collection
 				local collection = collectionfactory.create('#player_factory', nil, nil, {
@@ -54,13 +68,13 @@ function update(self, dt)
 				})
 				-- gets the specific player game object id from the collection
 				local player_id = collection[hash("/player")]
-				
+
 				-- ??? wtf Lua
 				local next_index = #self.clients + 1
-				self.clients[next_index] = { host = host, port = port, id = next_index, player_id = player_id }
+				self.clients[next_index] = { host = msg_host, port = msg_port, id = next_index, player_id = player_id }
 
 				-- Tell client about their ID
-				self.server:sendto(json.encode({ command = 'client_id', client_id = next_index }), host, port)
+				self.server:sendto(json.encode({ command = 'client_id', client_id = next_index }), msg_host, msg_port)
 			elseif command == 'input' then
 				if self.clients[decoded.client_id] then
 					local player_id = self.clients[decoded.client_id].player_id
@@ -92,14 +106,24 @@ function update(self, dt)
 		end
 	end
 
+	msgs = {}
+
 	if self.client then
 		local data = self.client:receive()
-		if data then
-			local decoded = json.decode(data)
+
+		while data do
+			msgs[#msgs + 1] = data
+			data = self.client:receive()
+		end
+
+		pprint(#msgs)
+
+		for _, msg_data in ipairs(msgs) do
+			local decoded = json.decode(msg_data)
 			local command = decoded.command
 
 			print('Client received: ', command)
-			
+
 			if command == 'client_id' then
 				self.client_id = decoded.client_id
 			elseif command == 'chef_angy' then
@@ -131,7 +155,7 @@ function update(self, dt)
 					local rotation_w = player.rotation_w
 					go.set_rotation(vmath.quat(0, 0, rotation_z, rotation_w), player_id)
 				end
-				
+
 				for index, hook in ipairs(decoded.hooks) do
 					local position_x = hook.position_x
 					local position_y = hook.position_y
