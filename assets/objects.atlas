@@ -1,10 +1,13 @@
 images {
-  image: "/assets/images/hook.png"
+  image: "/assets/images/hook_final.png"
 }
 images {
-  image: "/assets/images/chef_chop.png"
+  image: "/assets/images/chef_down.png"
 }
 images {
-  image: "/assets/images/chef_angy.png"
+  image: "/assets/images/chef_knife_up.png"
+}
+images {
+  image: "/assets/images/bubble_1.png"
 }
 extrude_borders: 2

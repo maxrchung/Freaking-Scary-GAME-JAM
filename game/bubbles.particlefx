@@ -2,8 +2,8 @@ emitters {
   mode: PLAY_MODE_LOOP
   duration: 1.0
   space: EMISSION_SPACE_WORLD
-  tile_source: "/builtins/graphics/particle_blob.tilesource"
-  animation: "anim"
+  tile_source: "/assets/objects.atlas"
+  animation: "bubble_1"
   material: "/builtins/materials/particlefx.material"
   blend_mode: BLEND_MODE_ADD
   max_particle_count: 512
@@ -78,7 +78,7 @@ emitters {
     points {
       y: 0.0
     }
-    spread: 360.0
+    spread: 15.0
   }
   properties {
     key: EMITTER_KEY_PARTICLE_ANGULAR_VELOCITY

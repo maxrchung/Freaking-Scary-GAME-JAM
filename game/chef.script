@@ -25,6 +25,8 @@ function fixed_update(self, dt)
         local bezier_point = (1 - self.t) * (1 - self.t) * current_position + 2 * (1 - self.t) * self.t * control_point + self.t * self.t * anger_position
         
         -- Move the object towards the Bezier curve point
+        bezier_point.y = current_position.y
+        bezier_point.z = 0.5
         go.set_position(bezier_point)
     end
 end
@@ -32,9 +34,9 @@ end
 function on_message(self, message_id, message, sender)
     -- Network calls to tell client to change animation
     if message_id == hash('chef_chop') then
-        sprite.play_flipbook("#sprite", "chef_chop")
+        sprite.play_flipbook("#sprite", "chef_down")
     elseif message_id == hash('chef_angy') then
-        sprite.play_flipbook("#sprite", "chef_angy")
+        sprite.play_flipbook("#sprite", "chef_knife_up")
     end
 
     if not self.is_server then
@@ -46,10 +48,10 @@ function on_message(self, message_id, message, sender)
         self.t = 0 -- Reset t when a new anger target is set
     elseif message_id == hash("trigger_response") and message.other_group == hash("player") then
         if message.enter then
-            sprite.play_flipbook("#sprite", "chef_chop")
+            sprite.play_flipbook("#sprite", "chef_down")
             msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_chop' })
         else
-            sprite.play_flipbook("#sprite", "chef_angy")
+            sprite.play_flipbook("#sprite", "chef_knife_up")
             msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_angy' })
         end
     end
