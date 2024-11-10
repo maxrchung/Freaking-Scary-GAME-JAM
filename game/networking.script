@@ -67,6 +67,7 @@ function update(self, dt)
 			elseif command == 'input' then
 				if self.clients[decoded.client_id] then
 					local player_id = self.clients[decoded.client_id].player_id
+					print(player_id)
 					msg.post(player_id, 'input', { action_id = decoded.action_id, action = decoded.action })
 				end
 			end
