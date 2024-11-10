@@ -1,8 +1,13 @@
 go.property("swing_speed", 2)        -- Speed of the swing
 go.property("swing_angle", 45)       -- Maximum swing angle
-go.property("chain_length", 50)     -- Length of the chain
-go.property("anchor_point", nil)  -- Point where the hook is anchored
+go.property("chain_length", 50)      -- Length of the chain
+go.property("anchor_point", nil)     -- Point where the hook is anchored
 go.property('is_server', false)
+go.property("input_influence", 0.5)  -- How much input affects swing
+go.property("momentum_decay", 0.98)  -- How quickly momentum decays
+go.property("max_momentum", 2.0)     -- Maximum momentum multiplier
+go.property("max_angle", 75)         -- Maximum swing angle in degrees
+go.property("gravity", 9.81)         -- Gravity constant
 
 local function lerp(a, b, t)
 	return a + (b - a) * t
@@ -17,6 +22,19 @@ function init(self)
 
 	-- Store the original rotation
 	self.original_rotation = go.get_rotation()
+	
+	-- Add to existing init
+    self.momentum = 0                -- Track swing momentum
+    self.target_angle = 0           -- Target angle based on input
+	self.current_angle = 0          -- Current actual angle
+	self.impulse = vmath.vector3(0, 0, 0)
+	self.angular_velocity = 0
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("apply_impulse") then
+		self.impulse = message.impulse
+	end
 end
 
 function update(self, dt)
@@ -24,30 +42,45 @@ function update(self, dt)
 		return
 	end
 	
-	-- Update the time
-	self.time = self.time + dt * self.swing_speed
-
-	-- Calculate the current angle based on a sine wave
-	local current_angle = math.rad(self.swing_angle) * math.sin(self.time)
-
-	-- Calculate the new position based on the angle and chain length
-	local offset_x = math.sin(current_angle) * self.chain_length
-	local offset_y = -math.cos(current_angle) * self.chain_length
-
-	local pivot_adjust_x = math.sin(current_angle) * self.hook_size
-	local pivot_adjust_y = -math.cos(current_angle) * self.hook_size
-
-	-- Set the new position relative to the anchor point
-	local new_position = vmath.vector3(
-		self.anchor_point.x + offset_x + pivot_adjust_x,
-		self.anchor_point.y + offset_y + pivot_adjust_y,
-		self.initial_position.z
-	)
-
-	-- Update the position
-	go.set_position(new_position)
-
-	-- Update the rotation to match the swing angle
-	local new_rotation = vmath.quat_rotation_z(current_angle)
-	go.set_rotation(new_rotation)
+    -- Calculate momentum from impulse magnitude
+    local impulse_magnitude = vmath.length(self.impulse) * self.input_influence * dt
+    local impulse_direction = self.impulse.x > 0 and 1 or -1
+    
+    -- Apply impulse to momentum
+    self.momentum = self.momentum + impulse_magnitude * impulse_direction
+    self.momentum = math.min(math.max(self.momentum, -self.max_momentum), self.max_momentum)
+    
+    -- Calculate pendulum physics
+    local gravity_torque = -self.gravity * math.sin(self.current_angle) * dt
+    self.angular_velocity = self.angular_velocity + gravity_torque
+    
+    -- Add momentum influence
+    self.angular_velocity = self.angular_velocity + self.momentum * dt
+    
+    -- Update angle
+    self.current_angle = self.current_angle + self.angular_velocity * dt
+    
+    -- Apply decay
+    self.momentum = self.momentum * self.momentum_decay
+    self.angular_velocity = self.angular_velocity * self.momentum_decay
+    
+    -- Limit angle
+    local max_rad = math.rad(self.max_angle)
+    self.current_angle = math.max(math.min(self.current_angle, max_rad), -max_rad)
+    
+    -- Calculate new position
+    local offset_x = math.sin(self.current_angle) * self.chain_length
+    local offset_y = -math.cos(self.current_angle) * self.chain_length
+    
+    local pivot_adjust_x = math.sin(self.current_angle) * self.hook_size
+    local pivot_adjust_y = -math.cos(self.current_angle) * self.hook_size
+    
+    local new_position = vmath.vector3(
+        self.anchor_point.x + offset_x + pivot_adjust_x,
+        self.anchor_point.y + offset_y + pivot_adjust_y,
+        self.initial_position.z
+    )
+    
+    go.set_position(new_position)
+    go.set_rotation(vmath.quat_rotation_z(self.current_angle))
 end

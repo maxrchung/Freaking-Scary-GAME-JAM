@@ -15,8 +15,6 @@ local max_speed = 450
 local gravity = -1900
 -- take-off speed when jumping in pixel units
 local jump_takeoff_speed = 1200
-local release_velocity_multiplier = 100
-local rotation_to_velocity_factor = 0.01
 
 -- pre-hashing ids improves performance
 local msg_contact_point_response = hash("contact_point_response")
@@ -142,6 +140,7 @@ function fixed_update(self, dt)
 
 			go.set_position(current_pos)
 			go.set_rotation(current_rotation)
+			msg.post(self.hooked_object, 'apply_impulse', { impulse = self.velocity })
 		end
 	end
 end
@@ -267,6 +266,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("trigger_response") and message.other_group == hash("hook") then
 		if message.enter then
 			self.hooked_object = message.other_id
+			msg.post(self.hooked_object, 'apply_impulse', { impulse = self.velocity * 20 })
 		end
 	end
 end
