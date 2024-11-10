@@ -1,0 +1,32 @@
+function init(self)
+	self.anger = nil
+	self.t = 0
+end
+
+function fixed_update(self, dt)
+	if self.anger then
+		local current_position = go.get_position()
+		local anger_position = go.get_position(self.anger)
+
+		-- Calculate the control point for the Bezier curve
+		local control_point = (current_position + anger_position) * 0.5 + vmath.vector3(0, 50, 0) -- Adjust the offset as needed
+
+		-- Update the t parameter based on dt
+		self.t = self.t + dt * 0.01 -- Adjust the speed as needed
+		if self.t > 1 then self.t = 0 end
+
+		-- Calculate the Bezier curve point
+		local bezier_point = (1 - self.t) * (1 - self.t) * current_position + 2 * (1 - self.t) * self.t * control_point + self.t * self.t * anger_position
+
+		-- Move the object towards the Bezier curve point
+		go.set_position(bezier_point)
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("make_angry") and sender ~= self.anger then
+		self.anger = sender
+		go.set_position(go.get_position(self.anger))
+		self.t = 0 -- Reset t when a new anger target is set
+	end
+end

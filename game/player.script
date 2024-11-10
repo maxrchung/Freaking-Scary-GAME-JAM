@@ -32,15 +32,14 @@ local anim_fall = hash("fall")
 
 function init(self)
 	if self.is_self or self.is_server then
-		-- activate camera attached to the player collection
-		-- this will send camera updates to the render script
-		msg.post('#camera', 'acquire_camera_focus')
-		msg.post('#camera', 'enable')
+		msg.post('/zoomies/zoomies#zoomies', 'make_angry')
+		msg.post('/zoomies/zoomies#camera', 'acquire_camera_focus')
+		msg.post('/zoomies/zoomies#camera', 'enable')
 		msg.post('@render:', 'use_camera_projection')
 	end
 
 	if not self.is_self and not self.is_server then
-		msg.post('#camera', 'disable')
+		msg.post('/zoomies/zoomies#camera', 'disable')
 	end
 	
 	if self.is_server then
@@ -126,23 +125,23 @@ function fixed_update(self, dt)
 
 	-- hook shit
 	if self.hooked_object then
-		if self.hooked_object then
-			local current_rotation = go.get_rotation(self.hooked_object)
-			local current_pos = go.get_position(self.hooked_object) - vmath.rotate(current_rotation, self.mouth_offset)
+		local current_rotation = go.get_rotation(self.hooked_object)
+		local current_pos = go.get_position(self.hooked_object) - vmath.rotate(current_rotation, self.mouth_offset)
 
-			if self.last_position then
-				self.last_hook_velocity = (current_pos - self.last_position) / dt
-				self.angular_velocity = (current_rotation.z - self.last_rotation.z) / dt
-			end
-
-			self.last_position = current_pos
-			self.last_rotation = current_rotation
-
-			go.set_position(current_pos)
-			go.set_rotation(current_rotation)
-			msg.post(self.hooked_object, 'apply_impulse', { impulse = self.velocity })
+		if self.last_position then
+			self.last_hook_velocity = (current_pos - self.last_position) / dt
+			self.angular_velocity = (current_rotation.z - self.last_rotation.z) / dt
 		end
+
+		self.last_position = current_pos
+		self.last_rotation = current_rotation
+
+		go.set_position(current_pos)
+		go.set_rotation(current_rotation)
+		msg.post(self.hooked_object, 'apply_impulse', { impulse = self.velocity })
 	end
+
+	-- Ensure the camera does not rotate with the player
 end
 
 -- https://defold.com/manuals/physics/#resolving-kinematic-collisions

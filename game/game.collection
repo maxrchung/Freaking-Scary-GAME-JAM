@@ -64,6 +64,14 @@ collection_instances {
     }
   }
 }
+collection_instances {
+  id: "zoomies"
+  collection: "/game/zoomies.collection"
+  position {
+    x: 1494.0
+    y: 1275.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "level"
