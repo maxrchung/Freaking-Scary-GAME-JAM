@@ -22,6 +22,8 @@ function init(self)
 
 	-- All inputs will be driven from networking
 	msg.post('.', 'acquire_input_focus')
+
+	sound.play('#ambience')
 end
 
 function final(self)
