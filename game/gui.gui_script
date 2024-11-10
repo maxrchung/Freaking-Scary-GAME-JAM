@@ -5,6 +5,7 @@ function init(self)
 	self.connect_button = gui.get_node('connect_button')
 	self.ip = gui.get_node('ip')
 	self.help_button = gui.get_node('help_button')
+	self.home_bg = gui.get_node('home_bg')
 
 	msg.post('.', 'acquire_input_focus')
 end
@@ -68,6 +69,7 @@ function on_input(self, action_id, action)
 				gui.set_enabled(self.connect_button, false)
 				gui.set_enabled(self.ip, false)
 				gui.set_enabled(self.help_button, false)
+				gui.set_enabled(self.home_bg, false)
 			elseif gui.pick_node(gui.get_node('connect_button'), action.x, action.y) then
 				self.state = 'game'
 				msg.post('#networking', 'connect_client', { ip = ip })
@@ -76,6 +78,7 @@ function on_input(self, action_id, action)
 				gui.set_enabled(self.connect_button, false)
 				gui.set_enabled(self.ip, false)
 				gui.set_enabled(self.help_button, false)
+				gui.set_enabled(self.home_bg, false)
 			end
 		end
 	end
