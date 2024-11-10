@@ -9,10 +9,24 @@ function init(self)
 	self.server = nil
 	self.client = nil
 	self.clients = {}
-	
+
+	-- Set up hook hashes so we can get them later
+	self.hooks = {}
+	for num = 1, 1 do
+		-- This will build something like /hook/hook, /hook2/hook, /hook3/hook etc.
+		if num == 1 then
+			self.hooks[num] = hash('/hook/hook')
+		else
+			self.hooks[num] = hash('/hook' .. num .. '/hook')
+		end
+		
+	end
+
+	-- All inputs will be driven from networking
 	msg.post('.', 'acquire_input_focus')
 end
 
+-- Used for some timer bullshlang
 local function no_op()
 end
 
@@ -61,13 +75,20 @@ function update(self, dt)
 		if not self.state_timer or not timer.get_info(self.state_timer) then
 			self.state_timer = timer.delay(TIMER_DELAY, false, no_op)
 
-			local state = {}
+			local players = {}
 			for index, client in ipairs(self.clients) do
 				local position = go.get_position(client.player_id)
 				local rotation = go.get_rotation(client.player_id)
-				state[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
+				players[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
 			end
-			msg.post('.', 'send_to_all_clients', { command = 'state', state = state })
+
+			local hooks = {}
+			for index, hook in ipairs(self.hooks) do
+				local position = go.get_position(hook)
+				local rotation = go.get_rotation(hook)
+				hooks[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
+			end
+			msg.post('.', 'send_to_all_clients', { command = 'state', players = players, hooks = hooks })
 		end
 	end
 
@@ -84,7 +105,7 @@ function update(self, dt)
 			if command == 'client_id' then
 				self.client_id = decoded.client_id
 			elseif command == 'state' then
-				for index, state in ipairs(decoded.state) do
+				for index, player in ipairs(decoded.players) do
 					-- If we don't have the client, then create one
 					if not self.clients[index] then
 						-- is_self indicates whether our flag/inputs should follow a particular player
@@ -98,13 +119,23 @@ function update(self, dt)
 						self.clients[index] = { host = '', port = '', id = index, player_id = player_id }
 					end
 
-					local position_x = state.position_x
-					local position_y = state.position_y
+					local position_x = player.position_x
+					local position_y = player.position_y
 					go.set_position(vmath.vector3(position_x, position_y, 0), self.clients[index].player_id)
 
-					local rotation_z = state.rotation_z
-					local rotation_w = state.rotation_w
+					local rotation_z = player.rotation_z
+					local rotation_w = player.rotation_w
 					go.set_rotation(vmath.quat(0, 0, rotation_z, rotation_w), self.clients[index].player_id)
+				end
+
+				for index, hook in ipairs(decoded.hooks) do
+					local position_x = hook.position_x
+					local position_y = hook.position_y
+					go.set_position(vmath.vector3(position_x, position_y, 0), self.hooks[index])
+
+					local rotation_z = hook.rotation_z
+					local rotation_w = hook.rotation_w
+					go.set_rotation(vmath.quat(0, 0, rotation_z, rotation_w), self.hooks[index])
 				end
 			end
 		end
