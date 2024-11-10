@@ -18,6 +18,33 @@ collection_instances {
     }
   }
 }
+collection_instances {
+  id: "hook1"
+  collection: "/game/hook.collection"
+  position {
+    x: 1325.0
+    y: 995.0
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "chef"
+  collection: "/game/chef.collection"
+  position {
+    x: 2287.0
+    y: 719.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "level"

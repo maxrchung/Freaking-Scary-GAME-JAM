@@ -1,4 +1,10 @@
 images {
   image: "/assets/images/hook.png"
 }
+images {
+  image: "/assets/images/chef_chop.png"
+}
+images {
+  image: "/assets/images/chef_angy.png"
+}
 extrude_borders: 2

@@ -173,6 +173,9 @@ local function handle_obstacle_contact(self, normal, distance)
 	if normal.y > 0.7 then
 		self.ground_contact = true
 		self.velocity.y = 0
+
+		-- make the chef angry?
+		msg.post("/chef/chef#chef", "make_angry")
 	end
 	-- collided with the ceiling
 	-- stop vertical movement
@@ -218,7 +221,7 @@ end
 local function release_from_hook(self)
 	if self.hooked_object then
 		-- Apply the combined velocity
-		self.velocity = self.last_hook_velocity * 3
+		self.velocity = vmath.vector3(self.last_hook_velocity.x * 1, self.last_hook_velocity.y * 15, 0)
 		self.angular_velocity = self.angular_velocity * 15
 
 		-- Clear hook reference
