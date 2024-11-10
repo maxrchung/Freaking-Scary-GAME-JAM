@@ -1,26 +1,15 @@
+
+
 local HOST = 'localhost'
 local PORT = 1666
 
--- Set this to true on one client to enable server
-local IS_SERVER = true
-
 function init(self)
-	if IS_SERVER then
-		self.server = socket.udp()
-		self.server:settimeout(0)
-		self.server:setsockname('*', PORT)
-		self.clients = {}
-		print('Server started')
-	end
-
-	self.client = socket.udp()
-	self.client:settimeout(0)
-	self.client:setpeername(HOST, PORT)
-	self.client_id = -1
-	msg.post('.', 'send_to_server', { command = 'connect' })
-	print('Client started')
-
-	msg.post(".", "acquire_input_focus")
+	self.is_server = false
+	self.server = nil
+	self.client = nil
+	self.clients = {}
+	
+	msg.post('.', 'acquire_input_focus')
 end
 
 function final(self)
@@ -32,30 +21,81 @@ function final(self)
 end
 
 function update(self, dt)
-	if IS_SERVER then
+	if self.is_server then
 		-- receivefrom tells us host/port info
 		local data, host, port = self.server:receivefrom()
 		if data then
-			print('Server received: ', data, host,  port)
 			local decoded = json.decode(data)
+			local command = decoded.command
+
+			if command ~= 'input' then
+				print('Server received: ', data, host,  port)
+			end
 			
-			if decoded.command == 'connect' then
-				local next_index = #self.clients + 1
+			if command == 'connect' then
+				-- creates a player collection
+				local collection = collectionfactory.create('#player_factory', nil, nil, {
+					[hash('/player')] = { is_server = true, is_self = false }
+				})
+				-- gets the specific player game object id from the collection
+				local player_id = collection[hash("/player")]
 				
 				-- ??? wtf Lua
-				self.clients[next_index] = { host = host, port = port, id = next_index }
+				local next_index = #self.clients + 1
+				self.clients[next_index] = { host = host, port = port, id = next_index, player_id = player_id }
 
-				-- Tell client about it's ID
-				msg.post('.', 'send_to_client', { command = 'set_client_id', client_id = next_index })
-			elseif decoded.command == 'set_client_id' then
-				self.client_id = decoded.client_id
+				-- Tell client about their ID
+				msg.post('.', 'send_to_client', { command = 'client_id', client_id = next_index })
+			elseif command == 'input' then
+				if self.clients[decoded.client_id] then
+					local player_id = self.clients[decoded.client_id].player_id
+					msg.post(player_id, 'input', { action_id = decoded.action_id, action = decoded.action })
+				end
 			end
+		end
+
+		local state = {}
+		for index, client in pairs(self.clients) do
+			local position = go.get_position(client.player_id)
+			state[index] = { position_x = position.x, position_y = position.y, position_z = position.z }
+			msg.post('.', 'send_to_all_clients', { command = 'state', state = state })
 		end
 	end
 
-	local data = self.client:receive()
-	if data then
-		print('Client received: ', data) 
+	if self.client then
+		local data = self.client:receive()
+		if data then
+			local decoded = json.decode(data)
+			local command = decoded.command
+
+			if command ~= 'state' then
+				print('Client received: ', data)
+			end
+			
+			if command == 'client_id' then
+				self.client_id = decoded.client_id
+			elseif command == 'state' then
+				for index, state in pairs(decoded.state) do
+					-- If we don't have the client, then create one
+					if not self.clients[index] then
+						-- is_self indicates whether our flag/inputs should follow a particular player
+						local is_self = index == self.client_id
+						local collection = collectionfactory.create('#player_factory', nil, nil, {
+							[hash('/player')] = { is_server = false, is_self = is_self }
+						})
+
+						local player_id = collection[hash("/player")]
+						-- Host and port don't really matter since this is client side
+						self.clients[index] = { host = '', port = '', id = index, player_id = player_id }
+					end
+
+					local position_x = state.position_x
+					local position_y = state.position_y
+					local position_z = state.position_z
+					go.set_position(vmath.vector3(position_x, position_y, position_z), self.clients[index].player_id)
+				end
+			end
+		end
 	end
 end
 
@@ -64,28 +104,60 @@ end
 function on_message(self, message_id, message, sender)
 	local data = json.encode(message)
 
-	print('Message: ' .. message_id .. ' ' .. data)
+	if (message.command ~= 'state' and message.command ~= 'input') then
+		print('Message: ' .. message_id .. ' ' .. data)
+	end
 	
-	if message_id == hash('send_to_all_clients') then
-		for index, client in pairs(self.clients) do
+	if message_id == hash('send_to_all_clients') and self.is_server then
+		for _, client in pairs(self.clients) do
 			self.server:sendto(data, client.host, client.port)
 		end
-	elseif message_id == hash('send_to_client') then
+	elseif message_id == hash('send_to_all_clients_except') and self.is_server then
+		for _, client in pairs(self.clients) do
+			-- Broadcast to everyone except this ID
+			if client.id ~= message.except_id then
+				self.server:sendto(data, client.host, client.port)
+			end
+		end
+	elseif message_id == hash('send_to_client') and self.is_server then
 		local client = self.clients[message.client_id]
 		self.server:sendto(data, client.host, client.port)
-	elseif message_id == hash('send_to_server') then
+	elseif message_id == hash('send_to_server') and not self.is_server then
+		message.client_id = self.client_id
+		data = json.encode(message)
 		self.client:send(data)
 	end
 end
 
 function on_input(self, action_id, action)
+	if self.client then
+		msg.post('.', 'send_to_server', { command = 'input', action_id = action_id, action = action })
+	end
+	
 	-- Test commands to send stuff from client or server
-
-	-- Send something from client to server
 	if action_id == hash('network_debug_1') then
+		if self.server == nil then
+			self.is_server = true
+			self.server = socket.udp()
+			self.server:settimeout(0)
+			self.server:setsockname('*', PORT)
+			self.clients = {}
+			print('Server started')
+		end
+	elseif action_id == hash('network_debug_2') then
+		if self.client == nil then
+			self.client = socket.udp()
+			self.client:settimeout(0)
+			self.client:setpeername(HOST, PORT)
+			self.client_id = -1
+			msg.post('.', 'send_to_server', { command = 'connect' })
+			print('Client started')
+		end
+	-- Send something from client to server
+	elseif action_id == hash('network_debug_3') then
 		msg.post('.', 'send_to_server', { message = 'test message from a client!' })
 	-- Send something from server to all clients
-	elseif action_id == hash('network_debug_2') then
+	elseif action_id == hash('network_debug_4') then
 		msg.post('.', 'send_to_all_clients', { message = 'test message from server!' })
 	end
 end

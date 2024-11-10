@@ -1,14 +1,5 @@
 name: "game"
 collection_instances {
-  id: "player"
-  collection: "/game/player.collection"
-  position {
-    x: 720.0
-    y: 650.0
-    z: 1.0
-  }
-}
-collection_instances {
   id: "hook"
   collection: "/game/hook.collection"
   position {
@@ -43,5 +34,15 @@ embedded_instances {
   "  id: \"networking\"\n"
   "  component: \"/game/networking.script\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"player_factory\"\n"
+  "  type: \"collectionfactory\"\n"
+  "  data: \"prototype: \\\"/game/player.collection\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
+  position {
+    x: 647.0
+    y: 704.0
+  }
 }
