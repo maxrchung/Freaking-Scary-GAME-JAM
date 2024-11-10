@@ -34,19 +34,15 @@ function update(self, dt)
 
 	-- Set the new position relative to the anchor point
 	local new_position = vmath.vector3(
-	self.anchor_point.x + offset_x + pivot_adjust_x,
-	self.anchor_point.y + offset_y + pivot_adjust_y,
-	self.initial_position.z
-)
+		self.anchor_point.x + offset_x + pivot_adjust_x,
+		self.anchor_point.y + offset_y + pivot_adjust_y,
+		self.initial_position.z
+	)
 
--- Update the position
-go.set_position(new_position)
+	-- Update the position
+	go.set_position(new_position)
 
--- Update the rotation to match the swing angle
-local new_rotation = vmath.quat_rotation_z(current_angle)
-go.set_rotation(new_rotation)
-end
-
-function on_message(self, message_id, message, sender)
--- Handle any messages here if needed
+	-- Update the rotation to match the swing angle
+	local new_rotation = vmath.quat_rotation_z(current_angle)
+	go.set_rotation(new_rotation)
 end
