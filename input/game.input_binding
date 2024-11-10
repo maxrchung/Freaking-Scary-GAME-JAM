@@ -42,3 +42,23 @@ mouse_trigger {
   input: MOUSE_WHEEL_DOWN
   action: "less_spin"
 }
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_LEFT
+  action: "left"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_RIGHT
+  action: "right"
+}
+gamepad_trigger {
+  input: GAMEPAD_RPAD_DOWN
+  action: "jump"
+}
+gamepad_trigger {
+  input: GAMEPAD_RSTICK_UP
+  action: "more_spin"
+}
+gamepad_trigger {
+  input: GAMEPAD_RSTICK_DOWN
+  action: "less_spin"
+}
