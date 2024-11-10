@@ -1,8 +1,8 @@
+go.property('is_server', false)
+
 function init(self)
     self.anger = nil
     self.t = 0
-
-    self.is_server = false
 end
 
 function fixed_update(self, dt)
@@ -30,11 +30,8 @@ function fixed_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-    -- Need some way to set chef is_server so doing it through messages
-    if message_id == hash('is_server') then
-        self.is_server = true
     -- Network calls to tell client to change animation
-    elseif message_id == hash('chef_chop') then
+    if message_id == hash('chef_chop') then
         sprite.play_flipbook("#sprite", "chef_chop")
     elseif message_id == hash('chef_angy') then
         sprite.play_flipbook("#sprite", "chef_angy")

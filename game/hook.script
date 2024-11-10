@@ -2,6 +2,7 @@ go.property("swing_speed", 2)        -- Speed of the swing
 go.property("swing_angle", 45)       -- Maximum swing angle
 go.property("chain_length", 50)     -- Length of the chain
 go.property("anchor_point", nil)  -- Point where the hook is anchored
+go.property('is_server', false)
 
 local function lerp(a, b, t)
 	return a + (b - a) * t
@@ -19,6 +20,10 @@ function init(self)
 end
 
 function update(self, dt)
+	if not self.is_server then
+		return
+	end
+	
 	-- Update the time
 	self.time = self.time + dt * self.swing_speed
 

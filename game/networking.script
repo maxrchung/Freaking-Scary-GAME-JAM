@@ -1,8 +1,6 @@
-
-
 local HOST = 'localhost'
 local PORT = 1666
-local TIMER_DELAY = 0.01
+local TIMER_DELAY = 0.05 -- Dunno but kind of seems stable?
 
 function init(self)
 	self.is_server = false
@@ -12,16 +10,16 @@ function init(self)
 
 	-- Set up hook hashes so we can get them later
 	self.hooks = {}
-	for num = 0, 2 do
+	for num = 1, 3 do
 		-- This will build something like /hook/hook, /hook1/hook, /hook2/hook etc.
-		if num == 0 then
-			self.hooks[num] = hash('/hook/hook')
+		if num == 1 then
+			self.hooks[num] = '/hook/hook'
 		else
-			self.hooks[num] = hash('/hook' .. num .. '/hook')
+			self.hooks[num] = '/hook' .. num - 1 .. '/hook'
 		end
 	end
 
-	self.chef = hash('/chef/chef')
+	self.chef = '/chef/chef'
 
 	-- All inputs will be driven from networking
 	msg.post('.', 'acquire_input_focus')
@@ -47,9 +45,7 @@ function update(self, dt)
 			local decoded = json.decode(data)
 			local command = decoded.command
 
-			if command ~= 'input' then
-				print('Server received: ', data, host,  port)
-			end
+			print('Server received: ', command)
 			
 			if command == 'connect' then
 				-- creates a player collection
@@ -64,7 +60,7 @@ function update(self, dt)
 				self.clients[next_index] = { host = host, port = port, id = next_index, player_id = player_id }
 
 				-- Tell client about their ID
-				msg.post('.', 'send_to_client', { command = 'client_id', client_id = next_index })
+				self.server:sendto(json.encode({ command = 'client_id', client_id = next_index }), host, port)
 			elseif command == 'input' then
 				if self.clients[decoded.client_id] then
 					local player_id = self.clients[decoded.client_id].player_id
@@ -73,26 +69,26 @@ function update(self, dt)
 			end
 		end
 
-		if not self.state_timer or not timer.get_info(self.state_timer) then
-			self.state_timer = timer.delay(TIMER_DELAY, false, no_op)
+		local players = {}
+		for index, client in ipairs(self.clients) do
+			local position = go.get_position(client.player_id)
+			local rotation = go.get_rotation(client.player_id)
+			players[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
+		end
 
-			local players = {}
-			for index, client in ipairs(self.clients) do
-				local position = go.get_position(client.player_id)
-				local rotation = go.get_rotation(client.player_id)
-				players[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
-			end
+		local hooks = {}
+		for index, hook in ipairs(self.hooks) do
+			local position = go.get_position(hook)
+			local rotation = go.get_rotation(hook)
+			hooks[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
+		end
 
-			local hooks = {}
-			for index, hook in ipairs(self.hooks) do
-				local position = go.get_position(hook)
-				local rotation = go.get_rotation(hook)
-				hooks[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
-			end
+		local chef_position  = go.get_position(self.chef)
+		local chef = { position_x = chef_position.x, position_y = chef_position.y }
 
-			local chef_position  = go.get_position(self.chef)
-			local chef = { position_x = chef_position.x, position_y = chef_position.y }
-			msg.post('.', 'send_to_all_clients', { command = 'state', players = players, hooks = hooks, chef = chef })
+		for _, client in ipairs(self.clients) do
+			local message = { command = 'state', players = players, hooks = hooks, chef = chef }
+			self.server:sendto(json.encode(message), client.host, client.port)
 		end
 	end
 
@@ -102,9 +98,7 @@ function update(self, dt)
 			local decoded = json.decode(data)
 			local command = decoded.command
 
-			if command ~= 'state' then
-				print('Client received: ', data)
-			end
+			print('Client received: ', command)
 			
 			if command == 'client_id' then
 				self.client_id = decoded.client_id
@@ -124,18 +118,20 @@ function update(self, dt)
 
 						local player_id = collection[hash('/player')]
 						-- Host and port don't really matter since this is client side
-						self.clients[index] = { host = '', port = '', id = index, player_id = player_id }
+						self.clients[index] = { host = '', port = '', id = index, player_id = msg.url(player_id) }
 					end
+
+					local player_id = self.clients[index].player_id
 
 					local position_x = player.position_x
 					local position_y = player.position_y
-					go.set_position(vmath.vector3(position_x, position_y, 0), self.clients[index].player_id)
+					go.set_position(vmath.vector3(position_x, position_y, 0), player_id)
 
 					local rotation_z = player.rotation_z
 					local rotation_w = player.rotation_w
-					go.set_rotation(vmath.quat(0, 0, rotation_z, rotation_w), self.clients[index].player_id)
+					go.set_rotation(vmath.quat(0, 0, rotation_z, rotation_w), player_id)
 				end
-
+				
 				for index, hook in ipairs(decoded.hooks) do
 					local position_x = hook.position_x
 					local position_y = hook.position_y
@@ -158,9 +154,7 @@ end
 function on_message(self, message_id, message, sender)
 	local data = json.encode(message)
 
-	if (message.command ~= 'state' and message.command ~= 'input') then
-		print('Message: ' .. message_id .. ' ' .. data)
-	end
+	-- print('Message: ' .. message_id)
 	
 	if message_id == hash('send_to_all_clients') and self.is_server then
 		for _, client in ipairs(self.clients) do
@@ -185,10 +179,12 @@ end
 
 function on_input(self, action_id, action)
 	if self.client then
-		if not self.input_timer or not timer.get_info(self.input_timer) then
-			self.input_timer = timer.delay(TIMER_DELAY, false, no_op)
-			msg.post('.', 'send_to_server', { command = 'input', action_id = action_id, action = action })
-		end
+		self.client:send(json.encode({
+			client_id = self.client_id,
+			command = 'input',
+			action_id = action_id,
+			action = action
+		}))
 	end
 	
 	-- Test commands to send stuff from client or server
@@ -200,7 +196,11 @@ function on_input(self, action_id, action)
 			self.server:setsockname('*', PORT)
 			self.clients = {}
 
-			msg.post('/chef/chef#chef', 'is_server')
+			for _, hook in ipairs(self.hooks) do
+				go.set(hook .. '#hook', 'is_server', true)
+			end
+			
+			go.set(self.chef .. '#chef', 'is_server', true)
 			
 			print('Server started')
 		end
