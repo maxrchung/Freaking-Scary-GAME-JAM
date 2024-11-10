@@ -190,5 +190,87 @@ nodes {
   parent: "help_button"
   inherit_alpha: true
 }
+nodes {
+  position {
+    x: 478.0
+    y: 321.0
+  }
+  scale {
+    x: 4.844051
+    y: 6.434288
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "help_bg"
+  adjust_mode: ADJUST_MODE_STRETCH
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  enabled: false
+}
+nodes {
+  scale {
+    x: 0.883488
+    y: 0.831464
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "YOU ARE REALLY\n"
+  "FISHING. FISH FROM\n"
+  "THE HOOK TO THE\n"
+  "NEXT HOOK UNTIL YOU\n"
+  "ESCAPE THE SCUBA CHEF."
+  font: "default"
+  id: "fishing_text"
+  parent: "help_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 114.0
+    y: 584.0
+  }
+  scale {
+    y: 0.69
+  }
+  size {
+    x: 150.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "back_button"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_TOP
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  enabled: false
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "back"
+  font: "default"
+  id: "back_text"
+  parent: "back_button"
+  inherit_alpha: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
