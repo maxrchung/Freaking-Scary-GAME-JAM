@@ -54,6 +54,8 @@ function init(self)
 	self.angular_velocity = 0
 	self.last_hook_angle = 0
 	self.last_hook_velocity = vmath.vector3()
+
+	self.mouth_offset = vmath.vector3(83, 56, 0)
 end
 
 local function play_animation(self, anim)
@@ -109,10 +111,10 @@ function fixed_update(self, dt)
 	self.wall_contact = false
 
 	-- hook shit
-	if  self.hooked_object then
+	if self.hooked_object then
 		if self.hooked_object then
-			local current_pos = go.get_position(self.hooked_object)
 			local current_rotation = go.get_rotation(self.hooked_object)
+			local current_pos = go.get_position(self.hooked_object) - vmath.rotate(current_rotation, self.mouth_offset)
 
 			if self.last_position then
 				self.last_hook_velocity = (current_pos - self.last_position) / dt
@@ -214,8 +216,8 @@ end
 local function release_from_hook(self)
 	if self.hooked_object then
 		-- Apply the combined velocity
-		self.velocity = self.last_hook_velocity * 5
-		self.angular_velocity = self.angular_velocity * 5
+		self.velocity = self.last_hook_velocity * 3
+		self.angular_velocity = self.angular_velocity * 15
 
 		-- Clear hook reference
 		self.hooked_object = nil
