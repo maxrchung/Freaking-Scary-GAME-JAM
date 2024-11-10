@@ -12,15 +12,16 @@ function init(self)
 
 	-- Set up hook hashes so we can get them later
 	self.hooks = {}
-	for num = 1, 1 do
-		-- This will build something like /hook/hook, /hook2/hook, /hook3/hook etc.
-		if num == 1 then
+	for num = 0, 2 do
+		-- This will build something like /hook/hook, /hook1/hook, /hook2/hook etc.
+		if num == 0 then
 			self.hooks[num] = hash('/hook/hook')
 		else
 			self.hooks[num] = hash('/hook' .. num .. '/hook')
 		end
-		
 	end
+
+	self.chef = hash('/chef/chef')
 
 	-- All inputs will be driven from networking
 	msg.post('.', 'acquire_input_focus')
@@ -67,7 +68,6 @@ function update(self, dt)
 			elseif command == 'input' then
 				if self.clients[decoded.client_id] then
 					local player_id = self.clients[decoded.client_id].player_id
-					print(player_id)
 					msg.post(player_id, 'input', { action_id = decoded.action_id, action = decoded.action })
 				end
 			end
@@ -89,7 +89,10 @@ function update(self, dt)
 				local rotation = go.get_rotation(hook)
 				hooks[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
 			end
-			msg.post('.', 'send_to_all_clients', { command = 'state', players = players, hooks = hooks })
+
+			local chef_position  = go.get_position(self.chef)
+			local chef = { position_x = chef_position.x, position_y = chef_position.y }
+			msg.post('.', 'send_to_all_clients', { command = 'state', players = players, hooks = hooks, chef = chef })
 		end
 	end
 
@@ -105,6 +108,10 @@ function update(self, dt)
 			
 			if command == 'client_id' then
 				self.client_id = decoded.client_id
+			elseif command == 'chef_angy' then
+				msg.post('/chef/chef#chef', 'chef_angy')
+			elseif command == 'chef_chop' then
+				msg.post('/chef/chef#chef', 'chef_chop')
 			elseif command == 'state' then
 				for index, player in ipairs(decoded.players) do
 					-- If we don't have the client, then create one
@@ -138,6 +145,9 @@ function update(self, dt)
 					local rotation_w = hook.rotation_w
 					go.set_rotation(vmath.quat(0, 0, rotation_z, rotation_w), self.hooks[index])
 				end
+
+				local chef = decoded.chef
+				go.set_position(vmath.vector3(chef.position_x, chef.position_y, 0), self.chef)
 			end
 		end
 	end
@@ -189,6 +199,9 @@ function on_input(self, action_id, action)
 			self.server:settimeout(0)
 			self.server:setsockname('*', PORT)
 			self.clients = {}
+
+			msg.post('/chef/chef#chef', 'is_server')
+			
 			print('Server started')
 		end
 	elseif action_id == hash('network_debug_2') then

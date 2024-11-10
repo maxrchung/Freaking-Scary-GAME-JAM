@@ -1,9 +1,15 @@
 function init(self)
     self.anger = nil
     self.t = 0
+
+    self.is_server = false
 end
 
 function fixed_update(self, dt)
+    if not self.is_server then
+        return
+    end
+    
     if self.anger then
         local current_position = go.get_position()
         local anger_position = go.get_position(self.anger)
@@ -24,14 +30,30 @@ function fixed_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+    -- Need some way to set chef is_server so doing it through messages
+    if message_id == hash('is_server') then
+        self.is_server = true
+    -- Network calls to tell client to change animation
+    elseif message_id == hash('chef_chop') then
+        sprite.play_flipbook("#sprite", "chef_chop")
+    elseif message_id == hash('chef_angy') then
+        sprite.play_flipbook("#sprite", "chef_angy")
+    end
+
+    if not self.is_server then
+        return
+    end
+    
     if message_id == hash("make_angry") and sender ~= self.anger then
         self.anger = sender
         self.t = 0 -- Reset t when a new anger target is set
     elseif message_id == hash("trigger_response") and message.other_group == hash("player") then
         if message.enter then
             sprite.play_flipbook("#sprite", "chef_chop")
+            msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_chop' })
         else
             sprite.play_flipbook("#sprite", "chef_angy")
+            msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_angy' })
         end
     end
 end
