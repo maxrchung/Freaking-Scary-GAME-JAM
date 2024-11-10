@@ -49,7 +49,8 @@ function update(self, dt)
 			data, host, port = self.server:receivefrom()
 		end
 
-		pprint(#msgs)
+		-- Debug if msgs are getting backed up
+		-- pprint(#msgs)
 
 		for _, msg_obj in ipairs(msgs) do
 			local msg_data = msg_obj.data
@@ -116,7 +117,8 @@ function update(self, dt)
 			data = self.client:receive()
 		end
 
-		pprint(#msgs)
+		-- Debug if msgs are getting backed up
+		-- pprint(#msgs)
 
 		for _, msg_data in ipairs(msgs) do
 			local decoded = json.decode(msg_data)
