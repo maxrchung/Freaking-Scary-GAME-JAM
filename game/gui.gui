@@ -1,0 +1,194 @@
+script: "/game/gui.gui_script"
+fonts {
+  name: "default"
+  font: "/builtins/fonts/default.font"
+}
+nodes {
+  position {
+    x: 478.0
+    y: 321.0
+  }
+  scale {
+    x: 4.844051
+    y: 6.434288
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  id: "home_bg"
+  adjust_mode: ADJUST_MODE_STRETCH
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  scale {
+    x: 0.883488
+    y: 0.831464
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "REAL\n"
+  "FISHING"
+  font: "default"
+  id: "title_text"
+  parent: "home_bg"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 838.0
+    y: 57.0
+  }
+  scale {
+    y: 0.69
+  }
+  size {
+    x: 150.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "create_button"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_BOTTOM
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "create server"
+  font: "default"
+  id: "create_text"
+  parent: "create_button"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 317.0
+    y: 57.0
+  }
+  scale {
+    y: 0.69
+  }
+  size {
+    x: 150.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "connect_button"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_BOTTOM
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "connect"
+  font: "default"
+  id: "connect_text"
+  parent: "connect_button"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 118.0
+    y: 57.0
+  }
+  scale {
+    y: 0.69
+  }
+  size {
+    x: 150.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "ip"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_BOTTOM
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "127.0.0.1"
+  font: "default"
+  id: "ip_text"
+  xanchor: XANCHOR_LEFT
+  yanchor: YANCHOR_BOTTOM
+  parent: "ip"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 838.0
+    y: 584.0
+  }
+  scale {
+    y: 0.69
+  }
+  size {
+    x: 150.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  id: "help_button"
+  xanchor: XANCHOR_RIGHT
+  yanchor: YANCHOR_TOP
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "help"
+  font: "default"
+  id: "help_text"
+  parent: "help_button"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

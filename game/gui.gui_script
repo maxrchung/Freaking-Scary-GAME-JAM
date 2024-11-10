@@ -1,0 +1,82 @@
+function init(self)
+	self.state = 'start'
+
+	self.create_button = gui.get_node('create_button')
+	self.connect_button = gui.get_node('connect_button')
+	self.ip = gui.get_node('ip')
+	self.help_button = gui.get_node('help_button')
+
+	msg.post('.', 'acquire_input_focus')
+end
+
+function update(self, dt)
+	-- Add update code here
+	-- Learn more: https://defold.com/manuals/script/
+	-- Remove this function if not needed
+end
+
+function on_message(self, message_id, message, sender)
+	-- Add message-handling code here
+	-- Learn more: https://defold.com/manuals/message-passing/
+	-- Remove this function if not needed
+end
+
+function on_input(self, action_id, action)
+	if not action.pressed then
+		return
+	end
+	
+	if self.state == 'start' then
+		local ip_text = gui.get_node('ip_text')
+		local ip = gui.get_text(ip_text)
+		
+		-- FUCK
+		if action_id == hash('1') then
+			ip = ip .. '1'
+		elseif action_id == hash('2') then
+			ip = ip .. '2'
+		elseif action_id == hash('3') then
+			ip = ip .. '3'
+		elseif action_id == hash('4') then
+			ip = ip .. '4'
+		elseif action_id == hash('5') then
+			ip = ip .. '5'
+		elseif action_id == hash('6') then
+			ip = ip .. '6'
+		elseif action_id == hash('7') then
+			ip = ip .. '7'
+		elseif action_id == hash('8') then
+			ip = ip .. '8'
+		elseif action_id == hash('9') then
+			ip = ip .. '9'
+		elseif action_id == hash('0') then
+			ip = ip .. '0'
+		elseif action_id == hash('period') then
+			ip = ip .. '.'
+		elseif action_id == hash('backspace') then
+			ip = string.sub(ip, 0, -2)
+		end
+
+		gui.set_text(ip_text, ip)
+
+		if action_id == hash("touch") then
+			if gui.pick_node(gui.get_node('create_button'), action.x, action.y) then
+				self.state = 'game'
+				msg.post('#networking', 'create_server')
+
+				gui.set_enabled(self.create_button, false)
+				gui.set_enabled(self.connect_button, false)
+				gui.set_enabled(self.ip, false)
+				gui.set_enabled(self.help_button, false)
+			elseif gui.pick_node(gui.get_node('connect_button'), action.x, action.y) then
+				self.state = 'game'
+				msg.post('#networking', 'connect_client', { ip = ip })
+
+				gui.set_enabled(self.create_button, false)
+				gui.set_enabled(self.connect_button, false)
+				gui.set_enabled(self.ip, false)
+				gui.set_enabled(self.help_button, false)
+			end
+		end
+	end
+end

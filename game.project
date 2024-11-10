@@ -1,5 +1,5 @@
 [project]
-title = Platformer game
+title = REAL FISHING
 
 [bootstrap]
 main_collection = /game/game.collectionc

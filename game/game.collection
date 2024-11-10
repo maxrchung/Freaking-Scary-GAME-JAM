@@ -91,6 +91,10 @@ embedded_instances {
   "  id: \"networking\"\n"
   "  component: \"/game/networking.script\"\n"
   "}\n"
+  "components {\n"
+  "  id: \"gui\"\n"
+  "  component: \"/game/gui.gui\"\n"
+  "}\n"
   "embedded_components {\n"
   "  id: \"player_factory\"\n"
   "  type: \"collectionfactory\"\n"
@@ -99,7 +103,7 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 647.0
-    y: 704.0
+    x: 626.0
+    y: 1181.0
   }
 }
