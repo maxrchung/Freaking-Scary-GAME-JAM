@@ -36,8 +36,13 @@ function init(self)
 	if self.is_self or self.is_server then
 		-- activate camera attached to the player collection
 		-- this will send camera updates to the render script
-		msg.post("#camera", "acquire_camera_focus")
-		msg.post("@render:", "use_camera_projection")
+		msg.post('#camera', 'acquire_camera_focus')
+		msg.post('#camera', 'enable')
+		msg.post('@render:', 'use_camera_projection')
+	end
+
+	if not self.is_self and not self.is_server then
+		msg.post('#camera', 'disable')
 	end
 	
 	if self.is_server then

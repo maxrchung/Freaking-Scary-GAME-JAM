@@ -55,11 +55,12 @@ function update(self, dt)
 		end
 
 		local state = {}
-		for index, client in pairs(self.clients) do
+		for index, client in ipairs(self.clients) do
 			local position = go.get_position(client.player_id)
-			state[index] = { position_x = position.x, position_y = position.y, position_z = position.z }
-			msg.post('.', 'send_to_all_clients', { command = 'state', state = state })
+			local rotation = go.get_rotation(client.player_id)
+			state[index] = { position_x = position.x, position_y = position.y, rotation_z =  rotation.z, rotation_w = rotation.w }
 		end
+		msg.post('.', 'send_to_all_clients', { command = 'state', state = state })
 	end
 
 	if self.client then
@@ -75,7 +76,7 @@ function update(self, dt)
 			if command == 'client_id' then
 				self.client_id = decoded.client_id
 			elseif command == 'state' then
-				for index, state in pairs(decoded.state) do
+				for index, state in ipairs(decoded.state) do
 					-- If we don't have the client, then create one
 					if not self.clients[index] then
 						-- is_self indicates whether our flag/inputs should follow a particular player
@@ -84,15 +85,18 @@ function update(self, dt)
 							[hash('/player')] = { is_server = false, is_self = is_self }
 						})
 
-						local player_id = collection[hash("/player")]
+						local player_id = collection[hash('/player')]
 						-- Host and port don't really matter since this is client side
 						self.clients[index] = { host = '', port = '', id = index, player_id = player_id }
 					end
 
 					local position_x = state.position_x
 					local position_y = state.position_y
-					local position_z = state.position_z
-					go.set_position(vmath.vector3(position_x, position_y, position_z), self.clients[index].player_id)
+					go.set_position(vmath.vector3(position_x, position_y, 0), self.clients[index].player_id)
+
+					local rotation_z = state.rotation_z
+					local rotation_w = state.rotation_w
+					go.set_rotation(vmath.quat(0, 0, rotation_z, rotation_w), self.clients[index].player_id)
 				end
 			end
 		end
@@ -109,11 +113,11 @@ function on_message(self, message_id, message, sender)
 	end
 	
 	if message_id == hash('send_to_all_clients') and self.is_server then
-		for _, client in pairs(self.clients) do
+		for _, client in ipairs(self.clients) do
 			self.server:sendto(data, client.host, client.port)
 		end
 	elseif message_id == hash('send_to_all_clients_except') and self.is_server then
-		for _, client in pairs(self.clients) do
+		for _, client in ipairs(self.clients) do
 			-- Broadcast to everyone except this ID
 			if client.id ~= message.except_id then
 				self.server:sendto(data, client.host, client.port)
