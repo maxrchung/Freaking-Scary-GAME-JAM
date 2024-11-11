@@ -159,6 +159,8 @@ function update(self, dt)
 				local revive_id = decoded.revive_id
 				sound.play('#reel')
 				msg.post(self.clients[revive_id].player_id, 'revive')
+			elseif command == 'play_jump' then
+				sound.play('#splash')
 			elseif command == 'state' then
 				for index, player in ipairs(decoded.players) do
 					-- If we don't have the client, then create one

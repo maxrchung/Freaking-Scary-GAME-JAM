@@ -192,6 +192,8 @@ local function jump(self)
 	-- only allow jump from ground
 	-- (extend this with a counter to do things like double-jumps)
 	if self.ground_contact then
+		msg.post('/networking#networking', 'send_to_all_clients', { command = 'play_jump' })
+		
 		-- set take-off speed
 		self.velocity.y = jump_takeoff_speed
 		-- play animation
