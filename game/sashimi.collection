@@ -1,7 +1,7 @@
 name: "default"
 scale_along_z: 0
 embedded_instances {
-  id: "player"
+  id: "sashimi"
   data: "components {\n"
   "  id: \"sashimi\"\n"
   "  component: \"/game/sashimi.script\"\n"

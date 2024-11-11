@@ -43,13 +43,25 @@ function on_message(self, message_id, message, sender)
         if message.enter then
             local player_position = go.get_position(message.other_id)
             sprite.play_flipbook("#sprite", "chef_down")
+
+            local sashimi_speed = math.random(100, 400)
+            local sashimi_rotation = math.random() * math.pi / 3 - math.pi / 6
             -- Spawn the sashimi
             msg.post('/networking#networking', 'send_to_all_clients', {
                 command = 'chef_chop',
-                sashimi_position_x = player_position.x,
-                sashimi_position_y = player_position.y,
-                sashimi_position_z = player_position.z
+                position_x = player_position.x,
+                position_y = player_position.y,
+                speed = sashimi_speed,
+                rotation = sashimi_rotation
             })
+
+            collectionfactory.create(
+                '/networking#sashimi_factory',
+                vmath.vector3(player_position.x, player_position.y, 0),
+                vmath.quat_rotation_z(sashimi_rotation),
+                { [hash('/sashimi')] = { speed = sashimi_speed } },
+                1 -- reset scaling
+            )
 
             -- Reset player
             local respawn_position = go.get_position('/hook/hook')

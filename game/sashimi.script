@@ -1,9 +1,11 @@
+go.property('speed', 100)
+
 function init(self)
 	-- initial player velocity
-	self.velocity = vmath.vector3(0, 100, 0)
+	self.velocity = vmath.vector3(0, self.speed, 0)
 
 	-- self kill
-	timer.delay(30, false, function()
+	timer.delay(10, false, function()
 		go.delete()
 	end)
 end
