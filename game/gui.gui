@@ -3,6 +3,10 @@ fonts {
   name: "default"
   font: "/builtins/fonts/default.font"
 }
+textures {
+  name: "objects"
+  texture: "/assets/objects.atlas"
+}
 nodes {
   position {
     x: 478.0
@@ -271,6 +275,22 @@ nodes {
   id: "back_text"
   parent: "back_button"
   inherit_alpha: true
+}
+nodes {
+  position {
+    x: 480.0
+    y: 323.0
+  }
+  scale {
+    x: 0.513641
+    y: 0.609857
+  }
+  type: TYPE_BOX
+  texture: "objects/vignette"
+  id: "vignette"
+  adjust_mode: ADJUST_MODE_STRETCH
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

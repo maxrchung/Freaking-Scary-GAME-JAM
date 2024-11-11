@@ -28,4 +28,7 @@ images {
 images {
   image: "/assets/images/beam.png"
 }
+images {
+  image: "/assets/images/vignette.png"
+}
 extrude_borders: 2

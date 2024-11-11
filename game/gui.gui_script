@@ -103,7 +103,7 @@ function on_input(self, action_id, action)
 		if action_id == hash("touch") then
 			if gui.pick_node(gui.get_node('back_button'), action.x, action.y) then
 				self.state = 'start'
-				sound.play('#reel')
+				sound.play('#reel' )
 
 				gui.set_enabled(self.create_button, true)
 				gui.set_enabled(self.connect_button, true)
