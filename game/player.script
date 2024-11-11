@@ -6,6 +6,9 @@ go.property('is_server', false)
 -- Indicates whether the player is for the current client
 go.property('is_self', false)
 
+-- The client ID associated with this player that's assigned by server
+go.property('client_id', -1)
+
 -- these are the tweaks for the mechanics, feel free to change them for a different feeling
 -- acceleration factor to use when air-borne
 local air_acceleration_factor = 0.8

@@ -13,4 +13,10 @@ images {
 images {
   image: "/assets/images/line.png"
 }
+images {
+  image: "/assets/images/cutting_board.png"
+}
+images {
+  image: "/assets/images/cutting_board_64.png"
+}
 extrude_borders: 2

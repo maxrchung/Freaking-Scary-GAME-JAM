@@ -19,6 +19,8 @@ function init(self)
 
 	self.chef = '/chef/chef'
 
+	self.ending = '/end'
+
 	-- All inputs will be driven from networking
 	msg.post('.', 'acquire_input_focus')
 
@@ -64,16 +66,17 @@ function update(self, dt)
 				-- Some hack adjustments to line up better with bit
 				spawn_position.x = spawn_position.x - 100
 				spawn_position.y = spawn_position.y - 50
-				
-				-- creates a player collection
-				local collection = collectionfactory.create('#player_factory', spawn_position, nil, {
-					[hash('/player')] = { is_server = true, is_self = false }
-				})
-				-- gets the specific player game object id from the collection
-				local player_id = collection[hash("/player")]
 
 				-- ??? wtf Lua
 				local next_index = #self.clients + 1
+				
+				-- creates a player collection
+				local collection = collectionfactory.create('#player_factory', spawn_position, nil, {
+					[hash('/player')] = { is_server = true, is_self = false, client_id = next_index }
+				})
+				-- gets the specific player game object id from the collection
+				local player_id = collection[hash("/player")]
+				
 				self.clients[next_index] = { host = msg_host, port = msg_port, id = next_index, player_id = player_id }
 
 				-- Tell client about their ID
@@ -148,7 +151,7 @@ function update(self, dt)
 						-- is_self indicates whether our flag/inputs should follow a particular player
 						local is_self = index == self.client_id
 						local collection = collectionfactory.create('#player_factory', nil, nil, {
-							[hash('/player')] = { is_server = false, is_self = is_self }
+							[hash('/player')] = { is_server = false, is_self = is_self, client_id = index }
 						})
 
 						local player_id = collection[hash('/player')]
@@ -225,6 +228,8 @@ function on_message(self, message_id, message, sender)
 			go.set(hook .. '#hook', 'is_server', true)
 		end
 
+		go.set(self.ending .. '#end', 'is_server', true)
+		
 		go.set(self.chef .. '#chef', 'is_server', true)
 
 		print('Server started')
