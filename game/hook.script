@@ -28,12 +28,16 @@ function init(self)
     self.target_angle = 0           -- Target angle based on input
 	self.current_angle = 0          -- Current actual angle
 	self.impulse = vmath.vector3(0, 0, 0)
-	self.angular_velocity = 0
+    self.angular_velocity = 0
+    self.applied_senders = {}
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("apply_impulse") then
-		self.impulse = message.impulse
+    if message_id == hash("apply_impulse") then
+        if not self.applied_senders[sender] then
+            self.impulse = self.impulse + message.impulse
+            self.applied_senders[sender] = true
+        end
 	end
 end
 
@@ -83,4 +87,7 @@ function fixed_update(self, dt)
     
     go.set_position(new_position)
     go.set_rotation(vmath.quat_rotation_z(self.current_angle))
+
+    self.impulse = vmath.vector3(0, 0, 0)
+    self.applied_senders = {}
 end
