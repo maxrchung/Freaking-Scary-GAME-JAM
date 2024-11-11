@@ -38,3 +38,22 @@ embedded_components {
   "}\n"
   ""
 }
+embedded_components {
+  id: "win_chef"
+  type: "sprite"
+  data: "default_animation: \"chef_knife_up\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/assets/objects.atlas\"\n"
+  "}\n"
+  ""
+  position {
+    x: 4.0
+    y: 121.0
+  }
+  scale {
+    x: 0.25
+    y: 0.25
+  }
+}

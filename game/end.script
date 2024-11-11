@@ -50,6 +50,12 @@ function on_message(self, message_id, message, sender)
 
 			-- Server side
 			msg.post(msg.url(nil, message.other_id, 'player'), 'winned')
+
+			sprite.play_flipbook("#win_chef", "chef_down")
+			timer.delay(0.5, false, function()
+				sprite.play_flipbook("#win_chef", "chef_knife_up")
+				msg.post('/networking#networking', 'send_to_all_clients', { command = 'win_chef_up' })
+			end)
 		end
 	end
 end

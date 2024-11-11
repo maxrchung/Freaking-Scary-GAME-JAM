@@ -149,8 +149,11 @@ function update(self, dt)
 				sound.play('#shing')
 			elseif command == 'winned' then
 				local winned_id = decoded.winned_id
+				sprite.play_flipbook("/end#win_chef", "chef_down")
 				sound.play('#shing')
 				msg.post(self.clients[winned_id].player_id, 'winned')
+			elseif command == 'win_chef_up' then
+				sprite.play_flipbook("/end#win_chef", "chef_knife_up")
 			elseif command == 'die' then
 				local dead_id = decoded.dead_id
 				sound.play('#shing')

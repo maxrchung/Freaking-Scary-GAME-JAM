@@ -63,7 +63,6 @@ function on_message(self, message_id, message, sender)
                 1 -- reset scaling
             )
 
-
             local dead_id = go.get(msg.url(nil, message.other_id, 'player'), 'client_id')
             msg.post(message.other_id, 'disable')
             msg.post('/networking#networking', 'send_to_all_clients', {
