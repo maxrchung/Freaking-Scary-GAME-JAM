@@ -42,7 +42,7 @@ collection_instances {
   collection: "/game/chef.collection"
   position {
     x: 2212.0
-    y: 715.0
+    y: 778.0
   }
 }
 collection_instances {
