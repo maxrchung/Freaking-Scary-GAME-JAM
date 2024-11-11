@@ -13,4 +13,13 @@ images {
 images {
   image: "/assets/images/line.png"
 }
+images {
+  image: "/assets/images/bubble_2.png"
+}
+images {
+  image: "/assets/images/bubble_3.png"
+}
+images {
+  image: "/assets/images/beam.png"
+}
 extrude_borders: 2
