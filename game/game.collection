@@ -333,6 +333,12 @@ embedded_instances {
   "  data: \"prototype: \\\"/game/sashimi.collection\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"reel\"\n"
+  "  type: \"sound\"\n"
+  "  data: \"sound: \\\"/assets/sounds/reel.ogg\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
   position {
     x: 626.0
