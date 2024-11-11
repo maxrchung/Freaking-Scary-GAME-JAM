@@ -1,7 +1,7 @@
 go.property("swing_speed", 2)        -- Speed of the swing
 go.property("swing_angle", 45)       -- Maximum swing angle
 go.property("chain_length", 50)      -- Length of the chain
-go.property("anchor_point", nil)     -- Point where the hook is anchored
+-- go.property("anchor_point", nil)     -- Point where the hook is anchored
 go.property('is_server', false)
 go.property("input_influence", 0.5)  -- How much input affects swing
 go.property("momentum_decay", 0.98)  -- How quickly momentum decays
