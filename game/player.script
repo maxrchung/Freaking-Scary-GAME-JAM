@@ -64,6 +64,7 @@ function init(self)
 		self.last_hook_velocity = vmath.vector3()
 
 		self.mouth_offset = vmath.vector3(83, 56, 0)
+		self.hook_angle_offset = vmath.quat()
 	end
 end
 
@@ -125,7 +126,7 @@ function fixed_update(self, dt)
 
 	-- hook shit
 	if self.hooked_object then
-		local current_rotation = go.get_rotation(self.hooked_object)
+		local current_rotation = go.get_rotation(self.hooked_object) * self.hook_angle_offset
 		local current_pos = go.get_position(self.hooked_object) - vmath.rotate(current_rotation, self.mouth_offset)
 
 		if self.last_position then
@@ -265,6 +266,7 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash("trigger_response") and message.other_group == hash("hook") then
 		if message.enter then
 			self.hooked_object = message.other_id
+			self.hook_angle_offset = go.get_rotation() * vmath.conj(go.get_rotation(message.other_id))
 			msg.post(self.hooked_object, 'apply_impulse', { impulse = self.velocity * 20 })
 		end
 	end
