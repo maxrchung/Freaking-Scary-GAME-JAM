@@ -1,6 +1,6 @@
 REAL FISHING is a 2D networked platformer about real fishing. Fish from the hook to the next hook until you escape the scuba chef.
 
-This is a horror game made with [Defold](https://defold.com).
+This is a horror game made over a weekend with [Defold](https://defold.com).
 
 ## Play
 
