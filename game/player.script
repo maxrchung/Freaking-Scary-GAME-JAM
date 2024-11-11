@@ -40,10 +40,6 @@ function init(self)
 		msg.post('/zoomies/zoomies#camera', 'enable')
 		msg.post('@render:', 'use_camera_projection')
 	end
-
-	if not self.is_self and not self.is_server then
-		msg.post('/zoomies/zoomies#camera', 'disable')
-	end
 	
 	if self.is_server then
 		-- initial player velocity

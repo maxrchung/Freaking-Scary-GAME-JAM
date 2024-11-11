@@ -21,6 +21,9 @@ function init(self)
 
 	self.ending = '/end'
 
+	-- Need to set as disable default state
+	msg.post('/zoomies/zoomies#camera', 'disable')
+	
 	-- All inputs will be driven from networking
 	msg.post('.', 'acquire_input_focus')
 
