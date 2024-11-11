@@ -44,7 +44,12 @@ function on_message(self, message_id, message, sender)
             local player_position = go.get_position(message.other_id)
             sprite.play_flipbook("#sprite", "chef_down")
             -- Spawn the sashimi
-            msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_chop', sashimi_position = player_position })
+            msg.post('/networking#networking', 'send_to_all_clients', {
+                command = 'chef_chop',
+                sashimi_position_x = player_position.x,
+                sashimi_position_y = player_position.y,
+                sashimi_position_z = player_position.z
+            })
 
             -- Reset player
             local respawn_position = go.get_position('/hook/hook')

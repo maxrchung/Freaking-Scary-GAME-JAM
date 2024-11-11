@@ -139,6 +139,12 @@ embedded_instances {
   "  data: \"sound: \\\"/assets/sounds/shing.ogg\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"sashimi_factory\"\n"
+  "  type: \"collectionfactory\"\n"
+  "  data: \"prototype: \\\"/game/sashimi.collection\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
   position {
     x: 626.0

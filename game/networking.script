@@ -133,6 +133,11 @@ function update(self, dt)
 			elseif command == 'chef_angy' then
 				sprite.play_flipbook("/chef/chef#sprite", "chef_knife_up")
 			elseif command == 'chef_chop' then
+				collectionfactory.create('#sashimi_factory', vmath.vector3(
+					decoded.sashimi_position_x,
+					decoded.sashimi_position_y,
+					decoded.sashimi_position_z
+				))
 				sprite.play_flipbook("/chef/chef#sprite", "chef_down")
 				sound.play('#shing')
 			elseif command == 'state' then

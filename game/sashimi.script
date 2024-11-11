@@ -1,0 +1,16 @@
+function init(self)
+	-- initial player velocity
+	self.velocity = vmath.vector3(0, 100, 0)
+
+	-- self kill
+	timer.delay(30, false, function()
+		go.delete()
+	end)
+end
+
+function fixed_update(self, dt)
+	-- move sashimi
+	local pos = go.get_position()
+	pos = pos + self.velocity * dt
+	go.set_position(pos)
+end
