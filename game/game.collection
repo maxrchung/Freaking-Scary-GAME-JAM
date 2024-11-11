@@ -3,8 +3,8 @@ instances {
   id: "end"
   prototype: "/game/end.go"
   position {
-    x: -9.0
-    y: 1031.0
+    x: 7318.0
+    y: 1667.0
   }
 }
 collection_instances {
@@ -171,8 +171,8 @@ collection_instances {
   id: "hook7"
   collection: "/game/hook.collection"
   position {
-    x: 4591.0
-    y: 1360.0
+    x: 4574.0
+    y: 1346.0
     z: -0.01
   }
   instance_properties {
@@ -191,8 +191,8 @@ collection_instances {
   id: "hook8"
   collection: "/game/hook.collection"
   position {
-    x: 5190.0
-    y: 1620.0
+    x: 5088.0
+    y: 1498.0
     z: -0.01
   }
   instance_properties {
@@ -211,8 +211,8 @@ collection_instances {
   id: "hook9"
   collection: "/game/hook.collection"
   position {
-    x: 5769.0
-    y: 1869.0
+    x: 5590.0
+    y: 1648.0
     z: -0.01
   }
   instance_properties {
@@ -231,8 +231,8 @@ collection_instances {
   id: "hook10"
   collection: "/game/hook.collection"
   position {
-    x: 6363.0
-    y: 2200.0
+    x: 6114.0
+    y: 1787.0
     z: -0.01
   }
   instance_properties {
@@ -251,8 +251,8 @@ collection_instances {
   id: "hook11"
   collection: "/game/hook.collection"
   position {
-    x: 7336.0
-    y: 2200.0
+    x: 6712.0
+    y: 1806.0
     z: -0.01
   }
   instance_properties {
@@ -288,7 +288,6 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: -15.0
     z: -0.1
   }
 }
