@@ -52,7 +52,7 @@ function update(self, dt)
 		end
 
 		-- Debug if msgs are getting backed up
-		-- pprint(#msgs)
+		print(#msgs)
 
 		for _, msg_obj in ipairs(msgs) do
 			local msg_data = msg_obj.data
@@ -126,7 +126,7 @@ function update(self, dt)
 		end
 
 		-- Debug if msgs are getting backed up
-		-- pprint(#msgs)
+		print(#msgs)
 
 		local last_state = nil
 		
