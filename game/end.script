@@ -33,17 +33,23 @@ function on_message(self, message_id, message, sender)
 	end
 	
 	if message_id == hash("trigger_response") and message.other_group == hash("player") then
-		if message.enter then
-			local client_id = go.get(msg.url(nil, message.other_id, 'player'), 'client_id')
+		local is_disabled = go.get(msg.url(nil, message.other_id, 'player'), 'is_disabled')
+		
+		if message.enter and not is_disabled then
+			local winned_id = go.get(msg.url(nil, message.other_id, 'player'), 'client_id')
 
+			local pos = go.get_position()
+			pos.y = pos.y + 50
+			go.set_position(pos, message.other_id)
+			
 			-- Tell who winned to client sides
 			msg.post('/networking#networking', 'send_to_all_clients', {
 				command = 'winned',
-				client_id = client_id
+				winned_id = winned_id
 			})
 
 			-- Server side
-			msg.post(message.other_id, 'winned')
+			msg.post(msg.url(nil, message.other_id, 'player'), 'winned')
 		end
 	end
 end

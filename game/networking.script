@@ -147,6 +147,10 @@ function update(self, dt)
 				)
 				sprite.play_flipbook("/chef/chef#sprite", "chef_down")
 				sound.play('#shing')
+			elseif command == 'winned' then
+				local winned_id = decoded.winned_id
+				sound.play('#shing')
+				msg.post(self.clients[winned_id].player_id, 'winned')
 			elseif command == 'state' then
 				for index, player in ipairs(decoded.players) do
 					-- If we don't have the client, then create one

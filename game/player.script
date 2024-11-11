@@ -9,6 +9,8 @@ go.property('is_self', false)
 -- The client ID associated with this player that's assigned by server
 go.property('client_id', -1)
 
+go.property('is_disabled', false)
+
 -- these are the tweaks for the mechanics, feel free to change them for a different feeling
 -- acceleration factor to use when air-borne
 local air_acceleration_factor = 0.8
@@ -97,6 +99,10 @@ local function update_animations(self)
 end
 
 function fixed_update(self, dt)
+	if self.is_disabled then
+		return
+	end
+	
 	if not self.is_server then
 		return
 	end
@@ -250,6 +256,11 @@ local function input(self, action_id, action)
 end
 
 function on_message(self, message_id, message, sender)
+	if message_id == hash('winned') then
+		self.is_disabled = true
+		sprite.play_flipbook("#sprite", 'dead_player')
+	end
+	
 	if not self.is_server then
 		return
 	end
