@@ -32,13 +32,6 @@ function fixed_update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-    -- Network calls to tell client to change animation
-    if message_id == hash('chef_chop') then
-        sprite.play_flipbook("#sprite", "chef_down")
-    elseif message_id == hash('chef_angy') then
-        sprite.play_flipbook("#sprite", "chef_knife_up")
-    end
-
     if not self.is_server then
         return
     end
@@ -48,11 +41,24 @@ function on_message(self, message_id, message, sender)
         self.t = 0 -- Reset t when a new anger target is set
     elseif message_id == hash("trigger_response") and message.other_group == hash("player") then
         if message.enter then
+            local player_position = go.get_position(message.other_id)
             sprite.play_flipbook("#sprite", "chef_down")
-            msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_chop' })
-        else
-            sprite.play_flipbook("#sprite", "chef_knife_up")
-            msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_angy' })
+            -- Spawn the sashimi
+            msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_chop', sashimi_position = player_position })
+
+            -- Reset player
+            local respawn_position = go.get_position('/hook/hook')
+            respawn_position.x = respawn_position.x - 100
+            respawn_position.y = respawn_position.y - 50
+            go.set_position(respawn_position, message.other_id)
+            go.set_rotation(vmath.quat(), message.other_id)
+
+            self.anger = nil
+
+            timer.delay(0.5, false, function()
+                sprite.play_flipbook("#sprite", "chef_knife_up")
+                msg.post('/networking#networking', 'send_to_all_clients', { command = 'chef_angy' })
+            end)
         end
     end
 end

@@ -3,8 +3,8 @@ collection_instances {
   id: "hook"
   collection: "/game/hook.collection"
   position {
-    x: 971.0
-    y: 774.0
+    x: 504.0
+    y: 1120.0
   }
   instance_properties {
     id: "hook"
@@ -131,6 +131,12 @@ embedded_instances {
   "  id: \"splash\"\n"
   "  type: \"sound\"\n"
   "  data: \"sound: \\\"/assets/sounds/splash.ogg\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"shing\"\n"
+  "  type: \"sound\"\n"
+  "  data: \"sound: \\\"/assets/sounds/shing.ogg\\\"\\n"
   "\"\n"
   "}\n"
   ""
