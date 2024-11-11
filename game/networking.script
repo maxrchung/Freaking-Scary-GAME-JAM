@@ -151,6 +151,14 @@ function update(self, dt)
 				local winned_id = decoded.winned_id
 				sound.play('#shing')
 				msg.post(self.clients[winned_id].player_id, 'winned')
+			elseif command == 'die' then
+				local dead_id = decoded.dead_id
+				sound.play('#shing')
+				msg.post(self.clients[dead_id].player_id, 'die')
+			elseif command == 'revive' then
+				local revive_id = decoded.revive_id
+				sound.play('#splash')
+				msg.post(self.clients[revive_id].player_id, 'revive')
 			elseif command == 'state' then
 				for index, player in ipairs(decoded.players) do
 					-- If we don't have the client, then create one

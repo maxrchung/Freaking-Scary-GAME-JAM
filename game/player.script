@@ -259,6 +259,12 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash('winned') then
 		self.is_disabled = true
 		sprite.play_flipbook("#sprite", 'dead_player')
+	elseif message_id == hash('die') then
+		self.is_disabled = true
+		msg.post('#sprite', 'disable')
+	elseif message_id == hash('revive') then
+		self.is_disabled = false
+		msg.post('#sprite', 'enable')
 	end
 	
 	if not self.is_server then

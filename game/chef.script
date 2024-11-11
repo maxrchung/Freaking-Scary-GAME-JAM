@@ -63,12 +63,30 @@ function on_message(self, message_id, message, sender)
                 1 -- reset scaling
             )
 
-            -- Reset player
-            local respawn_position = go.get_position('/hook/hook')
-            respawn_position.x = respawn_position.x - 100
-            respawn_position.y = respawn_position.y - 50
-            go.set_position(respawn_position, message.other_id)
-            go.set_rotation(vmath.quat(), message.other_id)
+
+            local dead_id = go.get(msg.url(nil, message.other_id, 'player'), 'client_id')
+            msg.post(message.other_id, 'disable')
+            msg.post('/networking#networking', 'send_to_all_clients', {
+                command = 'die',
+                dead_id = dead_id
+            })
+            msg.post(msg.url(nil, message.other_id, 'player'), 'die')
+            
+            timer.delay(2, false, function()
+                msg.post(message.other_id, 'enable')
+                msg.post('/networking#networking', 'send_to_all_clients', {
+                    command = 'revive',
+                    revive_id = dead_id
+                })
+                msg.post(msg.url(nil, message.other_id, 'player'), 'revive')
+                
+                local respawn_position = go.get_position('/hook/hook')
+                respawn_position.x = respawn_position.x - 100
+                respawn_position.y = respawn_position.y - 50
+                go.set_position(respawn_position, message.other_id)
+                go.set_rotation(vmath.quat(), message.other_id)
+            end)
+
 
             self.anger = nil
 
