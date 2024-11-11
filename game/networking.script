@@ -131,9 +131,10 @@ function update(self, dt)
 			if command == 'client_id' then
 				self.client_id = decoded.client_id
 			elseif command == 'chef_angy' then
-				msg.post('/chef/chef#chef', 'chef_angy')
+				sprite.play_flipbook("/chef/chef#sprite", "chef_knife_up")
 			elseif command == 'chef_chop' then
-				msg.post('/chef/chef#chef', 'chef_chop')
+				sprite.play_flipbook("/chef/chef#sprite", "chef_down")
+				sound.play('#shing')
 			elseif command == 'state' then
 				for index, player in ipairs(decoded.players) do
 					-- If we don't have the client, then create one
