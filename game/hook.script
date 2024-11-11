@@ -37,7 +37,7 @@ function on_message(self, message_id, message, sender)
 	end
 end
 
-function update(self, dt)
+function fixed_update(self, dt)
 	if not self.is_server then
 		return
 	end

@@ -220,7 +220,7 @@ end
 local function release_from_hook(self)
 	if self.hooked_object then
 		-- Apply the combined velocity
-		self.velocity = vmath.vector3(self.last_hook_velocity.x * 1, self.last_hook_velocity.y * 15, 0)
+		self.velocity = vmath.vector3(self.last_hook_velocity.x * 6, self.last_hook_velocity.y * 6, 0)
 		self.angular_velocity = self.angular_velocity * 15
 
 		-- Clear hook reference
