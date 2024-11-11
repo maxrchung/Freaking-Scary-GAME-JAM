@@ -19,4 +19,13 @@ images {
 images {
   image: "/assets/images/cutting_board_64.png"
 }
+images {
+  image: "/assets/images/bubble_2.png"
+}
+images {
+  image: "/assets/images/bubble_3.png"
+}
+images {
+  image: "/assets/images/beam.png"
+}
 extrude_borders: 2

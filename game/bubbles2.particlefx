@@ -2,35 +2,39 @@ emitters {
   mode: PLAY_MODE_LOOP
   duration: 9.9999999E14
   space: EMISSION_SPACE_WORLD
+  position {
+    x: 970.0
+  }
   tile_source: "/assets/objects.atlas"
-  animation: "bubble_1"
+  animation: "bubble_3"
   material: "/builtins/materials/particlefx.material"
   blend_mode: BLEND_MODE_ADD
-  max_particle_count: 512
+  max_particle_count: 500
   type: EMITTER_TYPE_BOX
   properties {
     key: EMITTER_KEY_SPAWN_RATE
     points {
-      y: 50.0
+      y: 30.0
     }
   }
   properties {
     key: EMITTER_KEY_SIZE_X
     points {
-      y: 387.54077
+      y: 3000.0
     }
   }
   properties {
     key: EMITTER_KEY_SIZE_Y
     points {
-      y: 12.0
+      y: 10.0
     }
   }
   properties {
     key: EMITTER_KEY_PARTICLE_LIFE_TIME
     points {
-      y: 6.0
+      y: 10.0
     }
+    spread: 3.0
   }
   properties {
     key: EMITTER_KEY_PARTICLE_SPEED
