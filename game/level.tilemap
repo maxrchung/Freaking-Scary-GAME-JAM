@@ -7855,10 +7855,15 @@ layers {
   cell {
     x: 0
     y: 10
-    tile: 132
+    tile: 0
   }
   cell {
     x: 0
+    y: 11
+    tile: 132
+  }
+  cell {
+    x: 156
     y: 11
     tile: 132
   }
@@ -7868,7 +7873,17 @@ layers {
     tile: 132
   }
   cell {
+    x: 156
+    y: 12
+    tile: 132
+  }
+  cell {
     x: 0
+    y: 13
+    tile: 132
+  }
+  cell {
+    x: 156
     y: 13
     tile: 132
   }
@@ -7878,7 +7893,17 @@ layers {
     tile: 132
   }
   cell {
+    x: 156
+    y: 14
+    tile: 132
+  }
+  cell {
     x: 0
+    y: 15
+    tile: 132
+  }
+  cell {
+    x: 156
     y: 15
     tile: 132
   }
@@ -7888,7 +7913,17 @@ layers {
     tile: 132
   }
   cell {
+    x: 156
+    y: 16
+    tile: 132
+  }
+  cell {
     x: 0
+    y: 17
+    tile: 132
+  }
+  cell {
+    x: 156
     y: 17
     tile: 132
   }
@@ -7898,7 +7933,17 @@ layers {
     tile: 132
   }
   cell {
+    x: 156
+    y: 18
+    tile: 132
+  }
+  cell {
     x: 0
+    y: 19
+    tile: 132
+  }
+  cell {
+    x: 156
     y: 19
     tile: 132
   }
@@ -7908,8 +7953,328 @@ layers {
     tile: 132
   }
   cell {
+    x: 156
+    y: 20
+    tile: 132
+  }
+  cell {
     x: 0
     y: 21
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 21
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 22
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 22
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 23
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 23
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 24
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 24
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 25
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 25
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 26
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 26
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 27
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 27
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 28
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 28
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 29
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 29
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 30
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 30
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 31
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 31
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 32
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 32
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 33
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 33
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 34
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 34
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 35
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 35
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 36
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 36
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 37
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 37
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 38
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 38
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 39
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 39
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 40
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 40
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 41
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 41
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 42
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 42
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 43
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 43
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 44
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 44
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 45
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 45
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 46
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 46
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 47
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 47
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 48
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 48
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 49
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 49
+    tile: 132
+  }
+  cell {
+    x: 0
+    y: 50
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 50
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 51
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 52
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 53
+    tile: 132
+  }
+  cell {
+    x: 156
+    y: 54
     tile: 132
   }
 }

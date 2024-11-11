@@ -11,8 +11,9 @@ collection_instances {
   id: "hook"
   collection: "/game/hook.collection"
   position {
-    x: 504.0
+    x: 847.0
     y: 1120.0
+    z: -0.01
   }
   instance_properties {
     id: "hook"
@@ -30,8 +31,9 @@ collection_instances {
   id: "hook1"
   collection: "/game/hook.collection"
   position {
-    x: 1325.0
+    x: 1668.0
     y: 995.0
+    z: -0.01
   }
   instance_properties {
     id: "hook"
@@ -57,8 +59,9 @@ collection_instances {
   id: "hook2"
   collection: "/game/hook.collection"
   position {
-    x: 1826.0
+    x: 2169.0
     y: 1104.0
+    z: -0.01
   }
   instance_properties {
     id: "hook"
@@ -78,6 +81,190 @@ collection_instances {
   position {
     x: 1494.0
     y: 1275.0
+  }
+}
+collection_instances {
+  id: "background"
+  collection: "/game/background.collection"
+}
+collection_instances {
+  id: "hook3"
+  collection: "/game/hook.collection"
+  position {
+    x: 2581.0
+    y: 1185.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook4"
+  collection: "/game/hook.collection"
+  position {
+    x: 2925.0
+    y: 1299.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook5"
+  collection: "/game/hook.collection"
+  position {
+    x: 3331.0
+    y: 1448.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook6"
+  collection: "/game/hook.collection"
+  position {
+    x: 4073.0
+    y: 1178.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook7"
+  collection: "/game/hook.collection"
+  position {
+    x: 4591.0
+    y: 1360.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook8"
+  collection: "/game/hook.collection"
+  position {
+    x: 5190.0
+    y: 1620.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook9"
+  collection: "/game/hook.collection"
+  position {
+    x: 5769.0
+    y: 1869.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook10"
+  collection: "/game/hook.collection"
+  position {
+    x: 6363.0
+    y: 2200.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
+  }
+}
+collection_instances {
+  id: "hook11"
+  collection: "/game/hook.collection"
+  position {
+    x: 7336.0
+    y: 2200.0
+    z: -0.01
+  }
+  instance_properties {
+    id: "hook"
+    properties {
+      id: "hook"
+      properties {
+        id: "chain_length"
+        value: "300.0"
+        type: PROPERTY_TYPE_NUMBER
+      }
+    }
   }
 }
 scale_along_z: 0
@@ -101,7 +288,8 @@ embedded_instances {
   "}\n"
   ""
   position {
-    z: -0.5
+    x: -15.0
+    z: -0.1
   }
 }
 embedded_instances {

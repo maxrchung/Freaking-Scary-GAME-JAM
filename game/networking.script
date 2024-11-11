@@ -8,7 +8,7 @@ function init(self)
 
 	-- Set up hook hashes so we can get them later
 	self.hooks = {}
-	for num = 1, 3 do
+	for num = 1, 12 do
 		-- This will build something like /hook/hook, /hook1/hook, /hook2/hook etc.
 		if num == 1 then
 			self.hooks[num] = '/hook/hook'

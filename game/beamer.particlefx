@@ -3,8 +3,8 @@ emitters {
   duration: 1.0
   space: EMISSION_SPACE_WORLD
   position {
-    x: 776.0
-    y: 191.0
+    x: 4279.0
+    y: 611.0
   }
   tile_source: "/assets/objects.atlas"
   animation: "beam"
@@ -15,13 +15,13 @@ emitters {
   properties {
     key: EMITTER_KEY_SPAWN_RATE
     points {
-      y: 0.35
+      y: 1.0
     }
   }
   properties {
     key: EMITTER_KEY_SIZE_X
     points {
-      y: 3000.0
+      y: 10000.0
     }
   }
   properties {
@@ -41,7 +41,7 @@ emitters {
   properties {
     key: EMITTER_KEY_PARTICLE_SIZE
     points {
-      y: 150.0
+      y: 250.0
     }
   }
   properties {
@@ -79,7 +79,7 @@ emitters {
   properties {
     key: EMITTER_KEY_PARTICLE_STRETCH_FACTOR_X
     points {
-      y: 0.0
+      y: -0.5
     }
     spread: 0.5
   }
@@ -125,14 +125,14 @@ emitters {
     key: PARTICLE_KEY_ALPHA
     points {
       y: 0.016658
-      t_x: 0.123242
-      t_y: 0.9923766
+      t_x: 0.50843954
+      t_y: 0.8610977
     }
     points {
       x: 1.0
       y: -0.008528
-      t_x: 0.08792256
-      t_y: -0.9961273
+      t_x: 0.33530727
+      t_y: -0.9421088
     }
   }
   particle_properties {
@@ -144,7 +144,7 @@ emitters {
     }
     points {
       x: 1.0
-      y: 0.0
+      y: 0.012409
       t_x: 0.19728231
       t_y: -0.98034674
     }

@@ -3,7 +3,7 @@ emitters {
   duration: 9.9999999E14
   space: EMISSION_SPACE_WORLD
   position {
-    x: 970.0
+    x: 4471.0
   }
   tile_source: "/assets/objects.atlas"
   animation: "bubble_1"
@@ -14,13 +14,13 @@ emitters {
   properties {
     key: EMITTER_KEY_SPAWN_RATE
     points {
-      y: 30.0
+      y: 5.0
     }
   }
   properties {
     key: EMITTER_KEY_SIZE_X
     points {
-      y: 3000.0
+      y: 10000.0
     }
   }
   properties {
@@ -32,9 +32,9 @@ emitters {
   properties {
     key: EMITTER_KEY_PARTICLE_LIFE_TIME
     points {
-      y: 10.0
+      y: 25.0
     }
-    spread: 3.0
+    spread: 10.0
   }
   properties {
     key: EMITTER_KEY_PARTICLE_SPEED
