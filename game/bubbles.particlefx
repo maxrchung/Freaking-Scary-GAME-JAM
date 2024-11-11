@@ -1,6 +1,6 @@
 emitters {
   mode: PLAY_MODE_LOOP
-  duration: 1.0
+  duration: 9.9999999E14
   space: EMISSION_SPACE_WORLD
   tile_source: "/assets/objects.atlas"
   animation: "bubble_1"
@@ -131,4 +131,5 @@ emitters {
       y: 1.0
     }
   }
+  size_mode: SIZE_MODE_AUTO
 }

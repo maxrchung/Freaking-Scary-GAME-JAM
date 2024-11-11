@@ -159,7 +159,7 @@ function update(self, dt)
 
 					local position_x = player.position_x
 					local position_y = player.position_y
-					go.set_position(vmath.vector3(position_x, position_y, 0), player_id)
+					go.set_position(vmath.vector3(position_x, position_y, 0.2), player_id)
 
 					local rotation_z = player.rotation_z
 					local rotation_w = player.rotation_w
@@ -177,7 +177,7 @@ function update(self, dt)
 				end
 
 				local chef = decoded.chef
-				go.set_position(vmath.vector3(chef.position_x, chef.position_y, 0), self.chef)
+				go.set_position(vmath.vector3(chef.position_x, chef.position_y, 0.1), self.chef)
 			end
 		end
 	end
