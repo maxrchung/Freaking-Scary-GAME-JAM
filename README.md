@@ -4,7 +4,7 @@ This is a horror game made over a weekend with [Defold](https://defold.com).
 
 ## Play
 
-For Windows users we have a bundled app in our releases: https://github.com/maxrchung/REAL-FISHING/releases/tag/1.0.0
+For Windows we have a bundled app in our releases: https://github.com/maxrchung/REALFISHING/releases
 
 This game cannot be played single player. You must have a server running, then clients can connect to it to play.
 
