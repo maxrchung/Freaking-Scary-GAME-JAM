@@ -162,10 +162,11 @@ function update(self, dt)
 				msg.post(self.clients[dead_id].player_id, 'die')
 			elseif command == 'revive' then
 				local revive_id = decoded.revive_id
-				sound.play('#reel')
 				msg.post(self.clients[revive_id].player_id, 'revive')
 			elseif command == 'play_jump' then
 				sound.play('#splash')
+			elseif command == 'hook_lock' then
+				sound.play('#lock')
 			elseif command == 'state' then
 				last_state = decoded
 			end
@@ -185,11 +186,6 @@ function update(self, dt)
 					local player_id = collection[hash('/player')]
 					-- Host and port don't really matter since this is client side
 					self.clients[index] = { host = '', port = '', id = index, player_id = msg.url(player_id) }
-
-					-- Reel on new character but not for yourself because that'll be handled by gui click on bottom
-					if not is_self then
-						sound.play('#reel')
-					end
 				end
 
 				local player_id = self.clients[index].player_id

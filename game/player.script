@@ -179,7 +179,9 @@ local function handle_obstacle_contact(self, normal, distance)
 		self.velocity.y = 0
 
 		-- make the chef angry?
-		msg.post("/chef/chef#chef", "make_angry")
+		if not self.is_disabled then
+			msg.post("/chef/chef#chef", "make_angry")
+		end
 	end
 	-- collided with the ceiling
 	-- stop vertical movement
@@ -226,6 +228,8 @@ end
 
 local function release_from_hook(self)
 	if self.hooked_object then
+		msg.post('/networking#networking', 'send_to_all_clients', { command = 'play_jump' })
+		
 		-- Apply the combined velocity
 		self.velocity = vmath.vector3(self.last_hook_velocity.x * 6, self.last_hook_velocity.y * 6, 0)
 		self.angular_velocity = self.angular_velocity * 15
@@ -286,6 +290,9 @@ function on_message(self, message_id, message, sender)
 			self.hooked_object = message.other_id
 			self.hook_angle_offset = go.get_rotation() * vmath.conj(go.get_rotation(message.other_id))
 			msg.post(self.hooked_object, 'apply_impulse', { impulse = self.velocity * 20 })
+			msg.post('/networking#networking', 'send_to_all_clients', {
+				command = 'hook_lock'
+			})
 		end
 	end
 end
