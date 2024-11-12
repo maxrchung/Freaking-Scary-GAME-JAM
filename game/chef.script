@@ -37,10 +37,16 @@ function on_message(self, message_id, message, sender)
     end
     
     if message_id == hash("make_angry") and sender ~= self.anger then
+        local is_disabled = go.get(sender, 'is_disabled')
+        if is_disabled then
+            return
+        end
+        
         self.anger = sender
         self.t = 0 -- Reset t when a new anger target is set
     elseif message_id == hash("trigger_response") and message.other_group == hash("player") then
-        if message.enter then
+        local is_disabled = go.get(msg.url(nil, message.other_id, 'player'), 'is_disabled')
+        if message.enter and not is_disabled then
             local player_position = go.get_position(message.other_id)
             sprite.play_flipbook("#sprite", "chef_down")
 
@@ -70,6 +76,8 @@ function on_message(self, message_id, message, sender)
                 dead_id = dead_id
             })
             msg.post(msg.url(nil, message.other_id, 'player'), 'die')
+            -- There seems to be some race condition where player could potentially not be fully disabled yet, so hopefully doing this instead of passing a message will be quicker?
+            go.set(msg.url(nil, message.other_id, 'player'), 'is_disabled', true)
             
             timer.delay(2, false, function()
                 msg.post(message.other_id, 'enable')
