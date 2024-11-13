@@ -295,6 +295,8 @@ function on_message(self, message_id, message, sender)
 			msg.post('/networking#networking', 'send_to_all_clients', {
 				command = 'hook_lock'
 			})
+
+			msg.post("/chef/chef#chef", "stop_angry")
 		end
 	end
 end

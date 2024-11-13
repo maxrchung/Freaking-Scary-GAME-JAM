@@ -36,7 +36,7 @@ function on_message(self, message_id, message, sender)
         return
     end
     
-    if message_id == hash("make_angry") and sender ~= self.anger then
+    if message_id == hash("make_angry") and not self.anger then
         local is_disabled = go.get(sender, 'is_disabled')
         if is_disabled then
             return
@@ -44,6 +44,9 @@ function on_message(self, message_id, message, sender)
         
         self.anger = sender
         self.t = 0 -- Reset t when a new anger target is set
+    elseif message_id == hash("stop_angry") and self.anger == sender then
+        self.anger = nil
+        self.t = 0
     elseif message_id == hash("trigger_response") and message.other_group == hash("player") then
         local is_disabled = go.get(msg.url(nil, message.other_id, 'player'), 'is_disabled')
         if message.enter and not is_disabled then
