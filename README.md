@@ -6,9 +6,9 @@ This is a horror game made over a weekend with Defold.
 
 For Windows we have a bundled app in our releases: https://github.com/maxrchung/REALFISHING/releases
 
-This game cannot be played single player. You must have a server running, then clients can connect to it to play.
+This game cannot be played single player. You must have a server running, then clients can connect to it to play. The server uses port 1666 if you need to port forward.
 
-You may need to port forward 1666 for the server.
+Typing an IP is a little jank but you should be able to use backspace, numbers, and period. In game, controls are left arrow, right arrow, and spacebar.
 
 ## Screenshots
 
